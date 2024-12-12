@@ -6,12 +6,73 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:05:38 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/12 17:56:14 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/12 19:07:11 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+// int	main(int argc, char **argv)
+// {
+// 	// if (!(argc >= 4 && argc <= 5) || !*argv[0])
+// 	// 	return (1);
+// 	return (0);
+// }
+
+// threads
+void	r1(void *data)
+{
+	t_philo	*philo;
+	int		i;
+
+	i = 0;
+	philo = (t_philo *) data;
+	while (i < 1000000)
+	{
+		pthread_mutex_lock(&philo->mutex);
+		philo->x++;
+		pthread_mutex_unlock(&philo->mutex);
+		i++;
+	}
+	printf("thread1 x = %i\n", philo->x);
+}
+
+void	r2(void *data)
+{
+	t_philo	*philo;
+	int	i;
+
+	i = 0;
+	philo = (t_philo *) data;
+	while (i < 1000000)
+	{
+		pthread_mutex_lock(&philo->mutex);
+		philo->x++;
+		pthread_mutex_unlock(&philo->mutex);
+		i++;
+	}
+	printf("thread2 x = %i\n", philo->x);
+}
+
+int	main(void)
+{
+	pthread_t		t1;
+	pthread_t		t2;
+	t_philo			philo;
+
+	pthread_mutex_init(&philo.mutex, NULL);
+	philo.x = 0;
+	if (pthread_create(&t1, NULL, &r1, &philo))
+		return (1);
+	if (pthread_create(&t2, NULL, &r2, &philo))
+		return (2);
+	if (pthread_join(t1, NULL))
+		return (3);
+	if (pthread_join(t2, NULL))
+		return (4);
+	pthread_mutex_destroy(&philo.mutex);
+	return (0);
+}
 
 // example of retrieving the time
 // int	main(void)

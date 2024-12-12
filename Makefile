@@ -6,12 +6,12 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2024/12/12 16:06:43 by tkeil            ###   ########.fr        #
+#    Updated: 2024/12/12 18:46:11 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+# CFLAGS = -Wall -Wextra -Werror
 
 NAME = philosophers
 INCLUDES = -Iheaders
@@ -53,5 +53,8 @@ fclean: clean
 	make -C $(LIBFTDIR) fclean
 
 re: fclean all
+
+assembly:
+	$(CC) -S srcs/philosophers.c
 
 .PHONY: all clean fclean re bonus
