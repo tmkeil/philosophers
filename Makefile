@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/15 19:08:22 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/15 19:25:10 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ clean:
 	rm -rf $(OBJSDIR)
 
 fclean: clean
-	rm -rf $(NAME) $(CHECKER)
+	rm -rf $(NAME) test
 
 re: fclean all
 
