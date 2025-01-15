@@ -6,27 +6,28 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2024/12/12 18:46:11 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/15 19:08:22 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 NAME = philosophers
 INCLUDES = -Iheaders
 OBJSDIR = objs/
 SRCSDIR = srcs/
-LIBFTDIR = libft/
-LIBFT = libft/libft.a
 
-SRCS = philosophers.c
-BONUS_SRCS = philosophers.c
+SRCS = philosophers.c numbers.c clearing.c init_philos.c logging.c strings.c
+TEST_SRCS = ./srcs/testing.c
+BONUS_SRCS = philosophers.c numbers.c clearing.c init_philos.c logging.c strings.c
 
 SRCS_PATHS = $(addprefix $(SRCSDIR), $(SRCS))
+TESTING_PATHS = $(addprefix $(SRCSDIR), $(TEST_SRCS))
 BONUS_PATHS = $(addprefix $(SRCSDIR), $(BONUS_SRCS))
 
 OBJS = $(addprefix $(OBJSDIR), $(SRCS:.c=.o))
+OBJS_TESTING = $(addprefix $(OBJSDIR), $(TEST_SRCS:.c=.o))
 OBJS_BONUS = $(addprefix $(OBJSDIR), $(BONUS_SRCS:.c=.o))
 
 all: $(NAME)
@@ -34,27 +35,28 @@ all: $(NAME)
 bonus: $(OBJS_BONUS) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(INCLUDES) -o $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(INCLUDES) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(INCLUDES) -o $(NAME)
 
 $(OBJSDIR)%.o: $(SRCSDIR)%.c
 	mkdir -p $(OBJSDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(LIBFT):
-	make -C $(LIBFTDIR)
-
 clean:
 	rm -rf $(OBJSDIR)
-	make -C $(LIBFTDIR) clean
 
 fclean: clean
 	rm -rf $(NAME) $(CHECKER)
-	make -C $(LIBFTDIR) fclean
 
 re: fclean all
 
+testing:
+	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_SRCS) -o test
+
 assembly:
 	$(CC) -S srcs/philosophers.c
+
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./philosophers
 
 .PHONY: all clean fclean re bonus

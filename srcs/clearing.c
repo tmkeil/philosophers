@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   clearing.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/14 15:35:41 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/05 17:18:28 by tkeil            ###   ########.fr       */
+/*   Created: 2025/01/15 16:28:04 by tkeil             #+#    #+#             */
+/*   Updated: 2025/01/15 18:12:36 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "philosophers.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 500
-# endif
+void	ft_clear_philos(t_philosopher **philos, int n)
+{
+	t_philosopher	*tmp;
 
-# include "libft.h"
-
-char	*get_next_line(int fd);
-
-#endif
+	while (n--)
+	{
+		tmp = (*philos)->next;
+		free(*philos);
+		*philos = tmp;
+	}
+	*philos = NULL;
+}
