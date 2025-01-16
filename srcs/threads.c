@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clearing.c                                         :+:      :+:    :+:   */
+/*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 16:28:04 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/16 18:07:17 by tkeil            ###   ########.fr       */
+/*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
+/*   Updated: 2025/01/16 20:36:01 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_clear_philos(t_philo **philos, int n)
+void	*ft_threads(void *data)
 {
-	t_philo	*tmp;
+	t_info	*info;
 
-	while (n--)
+	info = (t_info *)data;
+	return (NULL);	
+}
+
+void	ft_create_threads(t_info *info)
+{
+	int			i;
+	pthread_t	threads[info->n_philos];
+
+	i = 0;
+	while (i < info->n_philos)
 	{
-		tmp = (*philos)->right;
-		free(*philos);
-		*philos = tmp;
+		pthread_create(&threads[i], NULL, &ft_threads, (void *)info);
+		i++;
 	}
-	*philos = NULL;
 }

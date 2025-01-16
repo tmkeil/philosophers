@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:13:57 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/15 16:14:24 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/16 19:50:34 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,41 +23,41 @@
 void	*r1(void *data)
 {
 	int		local;
-	t_philo	*philo;
+	t_info	*info;
 
-	philo = (t_philo *)data;
+	info = (t_info *)data;
 	while (1)
 	{
-		pthread_mutex_lock(&philo->mutex);
-		if (philo->x >= 1000000)
+		pthread_mutex_lock(&info->mutex);
+		if (info->x >= 1000000)
 		{
-			local = philo->x;
+			local = info->x;
 			printf("thread1 x = %i\n", local);
-			pthread_mutex_unlock(&philo->mutex);
+			pthread_mutex_unlock(&info->mutex);
 			break ;
 		}
-		philo->x++;
-		pthread_mutex_unlock(&philo->mutex);
+		info->x++;
+		pthread_mutex_unlock(&info->mutex);
 	}
 	return (NULL);
 }
 
 void	*r2(void *data)
 {
-	t_philo	*philo;
+	t_info	*info;
 
-	philo = (t_philo *)data;
+	info = (t_info *)data;
 	while (1)
 	{
-		pthread_mutex_lock(&philo->mutex);
-		if (philo->x >= 2000000)
+		pthread_mutex_lock(&info->mutex);
+		if (info->x >= 2000000)
 		{
-			printf("thread2 x = %i\n", philo->x);
-			pthread_mutex_unlock(&philo->mutex);
+			printf("thread2 x = %i\n", info->x);
+			pthread_mutex_unlock(&info->mutex);
 			break ;
 		}
-		philo->x++;
-		pthread_mutex_unlock(&philo->mutex);
+		info->x++;
+		pthread_mutex_unlock(&info->mutex);
 	}
 	return (NULL);
 }
@@ -66,19 +66,19 @@ int	main(void)
 {
 	pthread_t	t1;
 	pthread_t	t2;
-	t_philo		philo;
+	t_info		info;
 
-	pthread_mutex_init(&philo.mutex, NULL);
-	philo.x = 0;
-	if (pthread_create(&t1, NULL, &r1, &philo))
+	pthread_mutex_init(&info.mutex, NULL);
+	info.x = 0;
+	if (pthread_create(&t1, NULL, &r1, &info))
 		return (1);
-	if (pthread_create(&t2, NULL, &r2, &philo))
+	if (pthread_create(&t2, NULL, &r2, &info))
 		return (3);
 	if (pthread_join(t1, NULL))
 		return (2);
 	if (pthread_join(t2, NULL))
 		return (4);
-	pthread_mutex_destroy(&philo.mutex);
+	pthread_mutex_destroy(&info.mutex);
 	return (0);
 }
 
@@ -92,21 +92,28 @@ int	main(void)
 
 
 
-// example of retrieving the time
+// // example of retrieving the time
 // int	main(void)
 // {
-// 	long			ds;
+// 	time_t			ds;
+// 	suseconds_t		milli_day;
 // 	int				dm;
 // 	int				dh;
 // 	int				m;
 // 	int				s;
+// 	int				ms;
 // 	struct timeval	tp;
 // 	struct timezone	tz;
+// 	time_t			current_milli_since_1970;
 
 // 	gettimeofday(&tp, &tz);
+// 	current_milli_since_1970 = (tp.tv_sec * 1000) + (tp.tv_usec / 1000);
 // 	// tp.tv_sec = number of seconds since 01.01.1970
 // 	// number of seconds since day start at 0 o'clock
+// 	printf("current millis: %li\n", current_milli_since_1970);
 // 	ds = tp.tv_sec % 86400;
+// 	// Millisekunden since day start
+// 	milli_day = ds * 1000 + tp.tv_usec / 1000;
 // 	// number of minutes since day start
 // 	dm = ds / 60;
 // 	// number of hours since day start
@@ -115,6 +122,8 @@ int	main(void)
 // 	m = dm % 60;
 // 	// current seconds
 // 	s = ds % 60;
-// 	printf("hour: %i, minute: %i, seconds: %i\n", dh, m, s);
+// 	// Millisekunden in current second
+// 	ms = tp.tv_usec / 1000;
+// 	printf("hour: %i, minute: %i, seconds: %i, milliseconds: %i\n", dh, m, s, ms);
 // 	return (0);
 // }

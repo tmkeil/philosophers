@@ -6,38 +6,47 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:05:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/15 19:20:31 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/16 20:26:34 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_test_philos(t_philosopher *philos, int n)
+void	ft_test_philos(t_info info, t_philo *philos, int n)
 {
 	if (!philos)
 		return ;
+	printf("info->start = %li\n", info.start);
+	printf("info->time_to_die = %li\n", info.time_to_die);
+	printf("info->time_to_eat = %li\n", info.time_to_eat);
+	printf("info->time_to_sleep = %li\n", info.time_to_sleep);
+	printf("info->n_to_eat = %i\n\n", info.n_to_eat);
 	while (n--)
 	{
 		printf("philos->id = %i\n", philos->id);
-		printf("philos->time_to_die = %li\n", philos->time_to_die);
-		printf("philos->time_to_eat = %li\n", philos->time_to_eat);
-		printf("philos->time_to_sleep = %li\n", philos->time_to_sleep);
-		printf("philos->n_to_eat = %li\n", philos->n_to_eat);
+		printf("philos->id_t = %i\n", philos->id_t);
+		printf("philos->n_eaten = %i\n", philos->n_eaten);
+		printf("philos->is_dead = %s\n", philos->is_dead ? "true" : "false");
+		printf("philos->fork_l = %p, philos->fork_r = %p\n", philos->fork_l, philos->fork_r);
+		printf("current = %p, left = %p, right = %p\n", philos, philos->left, philos->right);
 		printf("\n\n");
-		philos = philos->next;
+		philos = philos->right;
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_philo	philo;
+	t_info	info;
 
 	(void)envp;
 	if (!(argc >= 5 && argc <= 6) || !*argv[0])
 		return (printf("not enough or too many args\n"), 1);
-	philo.philos = NULL;
-	ft_create_philos(&philo, argv);
-	ft_test_philos(philo.philos, philo.n_philos);
-	ft_clear_philos(&(philo.philos), philo.n_philos);
+	ft_init_data(&info, argv);
+	ft_test_philos(info, info.philos, info.n_philos);
+	ft_create_threads(&info);
+	// ft_create_threads(info);
+	// ft_run_threads(info);
+	// ft_clear_threads();
+	ft_clear_philos(&(info.philos), info.n_philos);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/15 19:25:10 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/16 20:34:44 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCLUDES = -Iheaders
 OBJSDIR = objs/
 SRCSDIR = srcs/
 
-SRCS = philosophers.c numbers.c clearing.c init_philos.c logging.c strings.c
+SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c
 TEST_SRCS = ./srcs/testing.c
 BONUS_SRCS = philosophers.c numbers.c clearing.c init_philos.c logging.c strings.c
 

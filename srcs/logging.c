@@ -6,18 +6,18 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 18:15:11 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/15 19:14:39 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/16 19:31:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static void	ft_write_log(long time, int action, int id, int fd)
+static void	ft_write_log(time_t time, int action, int id, int fd)
 {
 	char	*s_id;
 	char	*s_time;
 
-	s_id = ft_ltoa(id);
+	s_id = ft_ltoa((long)id);
 	s_time = ft_ltoa(time);
 	ft_putstr_fd(s_time, fd);
 	ft_putchar_fd(' ', fd);
@@ -36,7 +36,7 @@ static void	ft_write_log(long time, int action, int id, int fd)
 	free(s_time);
 }
 
-void	ft_log(t_philo *philo, long time, int action, int id)
+void	ft_log(t_info *info, time_t time, int act, int id)
 {
 	int	fd;
 
@@ -44,9 +44,9 @@ void	ft_log(t_philo *philo, long time, int action, int id)
 	if (fd < 0)
 	{
 		perror("open logs.txt");
-		ft_clear_philos(&(philo->philos), philo->n_philos);
+		ft_clear_philos(&(info->philos), info->n_philos);
 		exit(EXIT_FAILURE);
 	}
-	ft_write_log(time, action, id, fd);
+	ft_write_log(time, act, id, fd);
 	close(fd);
 }
