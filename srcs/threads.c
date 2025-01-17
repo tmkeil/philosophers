@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/17 14:20:06 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/17 14:27:22 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	*ft_philo(void *arg)
 	t_info	*info;
 	t_philo	*philo;
 
+	args = (void **)arg;
 	info = (t_info *)args[0];
 	philo = (t_philo *)args[1];
 	return (NULL);
