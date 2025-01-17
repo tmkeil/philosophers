@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clearing.c                                         :+:      :+:    :+:   */
+/*   gettime.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 16:28:04 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/17 14:18:41 by tkeil            ###   ########.fr       */
+/*   Created: 2025/01/17 13:00:32 by tkeil             #+#    #+#             */
+/*   Updated: 2025/01/17 13:00:55 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_clear_philos(t_philo **philos, int n)
+time_t	ft_gettime(void)
 {
-	t_philo	*tmp;
+	struct timeval	tp;
 
-	while (n--)
-	{
-		tmp = (*philos)->right;
-		free(*philos);
-		pthread_mutex_destroy((*philos)->fork_l);
-		*philos = tmp;
-	}
-	*philos = NULL;
+	gettimeofday(&tp, NULL);
+	return ((tp.tv_sec * 1000) + (tp.tv_usec / 1000));
 }

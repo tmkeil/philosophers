@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clearing.c                                         :+:      :+:    :+:   */
+/*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 16:28:04 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/17 14:18:41 by tkeil            ###   ########.fr       */
+/*   Created: 2025/01/17 13:56:12 by tkeil             #+#    #+#             */
+/*   Updated: 2025/01/17 13:59:44 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_clear_philos(t_philo **philos, int n)
+void	ft_parse_parameters(int params[], int size, char **argv)
 {
-	t_philo	*tmp;
+	int	i;
 
-	while (n--)
+	i = 0;
+	while (i < 5)
+		params[i++] = -1;
+	i = 0;
+	while (i < size && argv[i + 1])
 	{
-		tmp = (*philos)->right;
-		free(*philos);
-		pthread_mutex_destroy((*philos)->fork_l);
-		*philos = tmp;
+		params[i] = ft_atol(argv[i + 1]);
+		if (params[i] == -1 || params[i] < 0)
+		{
+			printf("invalid parameter\n");
+			exit(EXIT_FAILURE);
+		}
+		i++;
 	}
-	*philos = NULL;
 }

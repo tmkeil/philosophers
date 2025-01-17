@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:22:15 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/15 19:02:22 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/17 13:24:29 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*ft_ltoa(long nbr)
 	was_neg = 0;
 	size = ft_length(nbr);
 	s_nbr = malloc(sizeof(char) * (size + 1));
+	if (!s_nbr)
+		return (NULL);
 	s_nbr[size] = '\0';
 	if (nbr < 0)
 	{

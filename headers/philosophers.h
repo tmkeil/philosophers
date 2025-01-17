@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/16 20:36:25 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/17 14:20:17 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef struct s_info
 	int				x;
 	pthread_mutex_t	mutex;
 	time_t			start;
-	t_philo			*philos;
 	int				n_philos;
 	int				n_to_eat;
+	t_philo			*philos;
 	time_t			time_to_die;
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
@@ -59,6 +59,7 @@ void				ft_clear_philos(t_philo **philos, int n);
 
 // init.c
 void				ft_init_data(t_info *info, char **argv);
+void				ft_parse_parameters(int params[], int size, char **argv);
 
 // logging.c
 void				ft_log(t_info *philo, time_t time, int act, int id);
@@ -69,6 +70,10 @@ int					ft_putstr_fd(char *s, int fd);
 size_t				ft_strlen(const char *s);
 
 // threads
-void				ft_create_threads(t_info *info);
-void				*ft_threads(void *data);
+void				*ft_philo(void *arg);
+void				ft_run_threads(t_info *info);
+
+// gettime
+time_t				ft_gettime(void);
+
 #endif
