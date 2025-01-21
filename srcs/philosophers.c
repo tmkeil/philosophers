@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:05:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 15:08:29 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 18:51:11 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ft_test_philos(t_info *info, t_philo *philos, int n)
 {
 	if (!philos)
 		return ;
-	printf("info->start = %li\n", info->start);
 	printf("info->n_pilos = %i\n", info->n_philos);
 	printf("info->time_to_die = %li\n", info->time_to_die);
 	printf("info->time_to_eat = %li\n", info->time_to_eat);
@@ -25,7 +24,7 @@ void	ft_test_philos(t_info *info, t_philo *philos, int n)
 	while (n--)
 	{
 		printf("philos->id = %i\n", philos->id);
-		printf("philos->id_t = %li\n", philos->id_t);
+		printf("philos->id_t = %lu\n", (unsigned long)philos->id_t);
 		printf("philos->n_eaten = %i\n", philos->n_eaten);
 		printf("philos->fork_l = %p, philos->fork_r = %p\n", philos->fork_l, philos->fork_r);
 		printf("current = %p, left = %p, right = %p\n", philos, philos->left, philos->right);

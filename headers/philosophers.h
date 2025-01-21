@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 15:35:57 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 18:49:04 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_philo
 	int				id;
 	pthread_t		id_t;
 	int				n_eaten;
+	time_t			start_time;
 	time_t			last_eaten;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
@@ -48,7 +49,6 @@ typedef struct s_info
 {
 	int				x;
 	pthread_mutex_t	mutex;
-	time_t			start;
 	int				n_philos;
 	int				n_to_eat;
 	t_philo			*philos;

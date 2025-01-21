@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 15:36:52 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 18:38:05 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_init_new_philo(t_philo **new, int i)
 	if (!*new)
 		return ;
 	(*new)->id = i;
-	(*new)->id_t = -1;
+	(*new)->id_t = NULL;
 	(*new)->left = NULL;
 	(*new)->right = NULL;
 	(*new)->n_eaten = 0;

@@ -6,14 +6,14 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/17 15:05:58 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/21 18:39:15 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-NAME = philosophers
+NAME = philo
 INCLUDES = -Iheaders
 OBJSDIR = objs/
 SRCSDIR = srcs/
