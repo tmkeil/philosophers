@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 18:15:11 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 02:37:35 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 15:06:51 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	ft_log(t_info *info, time_t time, int act, int id)
 	// }
 	(void)info;
 	// printf("log\n");
+	pthread_mutex_lock(&(info->print_mutex));
 	ft_write_log(time, act, id, STDOUT_FILENO);
+	pthread_mutex_unlock(&(info->print_mutex));
 	// close(fd);
 }

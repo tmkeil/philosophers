@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:28:04 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 00:46:06 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 14:48:33 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	ft_clear_philos(t_philo **philos, int n)
 	while (n--)
 	{
 		tmp = (*philos)->right;
-		free(*philos);
 		pthread_mutex_destroy((*philos)->fork_l);
+		pthread_mutex_destroy(&(*philos)->eat_mutex);
+		free(*philos);
 		*philos = tmp;
 	}
 	*philos = NULL;

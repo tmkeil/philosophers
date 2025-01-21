@@ -6,40 +6,36 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 02:48:33 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 15:31:49 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_wait_for_forks(t_philo *philo, t_info *info)
+void	ft_eat(t_philo **philo, t_info *info)
 {
-	if (philo->id % 2 == 0)
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
+
+	if ((*philo)->id % 2 == 0)
 	{
-		if (pthread_mutex_trylock(philo->fork_l) == 0)
-			printf("fork %p was locked at philo %p\n", philo->fork_l, philo);
-		else
-			printf("fork %p could not get locked at philo %p\n", philo->fork_l, philo);
-		ft_log(info, ft_gettime(), FORK, philo->id);
-		if (pthread_mutex_trylock(philo->fork_r) == 0)
-			printf("fork %p was locked at philo %p\n", philo->fork_r, philo);
-		else
-			printf("fork %p was locked at philo %p\n", philo->fork_r, philo);
-		ft_log(info, ft_gettime(), FORK, philo->id);
+		first_fork = (*philo)->fork_l;
+		second_fork = (*philo)->fork_r;
 	}
 	else
 	{
-		if (pthread_mutex_trylock(philo->fork_r) == 0)
-			printf("fork %p was locked at philo %p\n", philo->fork_r, philo);
-		else
-			printf("fork %p could not get locked at philo %p\n", philo->fork_r, philo);
-		ft_log(info, ft_gettime(), FORK, philo->id);
-		if (pthread_mutex_trylock(philo->fork_l) == 0)
-			printf("fork %p was locked at philo %p\n", philo->fork_l, philo);
-		else
-			printf("fork %p could not get locked at philo %p\n", philo->fork_l, philo);
-		ft_log(info, ft_gettime(), FORK, philo->id);
+		first_fork = (*philo)->fork_r;
+		second_fork = (*philo)->fork_l;
 	}
+	pthread_mutex_lock(first_fork);
+	ft_log(info, ft_gettime(), FORK, (*philo)->id);
+	pthread_mutex_lock(second_fork);
+	ft_log(info, ft_gettime(), FORK, (*philo)->id);
+	ft_log(info, ft_gettime(), EATING, (*philo)->id);
+	ft_sleep(info->time_to_eat * 1000);
+	pthread_mutex_lock(&(*philo)->eat_mutex);
+	(*philo)->last_eaten = ft_gettime();
+	pthread_mutex_unlock(&(*philo)->eat_mutex);
 }
 
 void	ft_unlock_forks(t_philo *philo)
@@ -50,7 +46,13 @@ void	ft_unlock_forks(t_philo *philo)
 
 int	ft_check_death(t_philo *philo, t_info *info)
 {
-	return (info->time_to_die <= ft_gettime() - philo->last_eaten);
+	int	dead;
+	pthread_mutex_lock(&philo->eat_mutex);
+	dead = (info->time_to_die <= ft_gettime() - philo->last_eaten);
+	if (dead)
+		info->died = true;
+	pthread_mutex_unlock(&philo->eat_mutex);
+	return (dead || info->died);
 }
 
 void	*ft_philo(void *arg)
@@ -62,21 +64,17 @@ void	*ft_philo(void *arg)
 	args = (void **)arg;
 	info = (t_info *)args[0];
 	philo = (t_philo *)args[1];
-	// printf("info->start = %li\n", info->start);
-	// printf("info->n_pilos = %i\n", info->n_philos);
-	// printf("info->time_to_die = %li\n", info->time_to_die);
-	// printf("info->time_to_eat = %li\n", info->time_to_eat);
-	// printf("info->time_to_sleep = %li\n", info->time_to_sleep);
-	// printf("info->n_to_eat = %i\n\n", info->n_to_eat);
+	info->start = ft_gettime();
+	philo->last_eaten = ft_gettime();
 	while (!ft_check_death(philo, info))
 	{
-		ft_wait_for_forks(philo, info);
-		ft_log(info, ft_gettime(), EATING, philo->id);
-		usleep(info->time_to_eat * 1000);
-		philo->last_eaten = ft_gettime();
+		ft_eat(&philo, info);
+		pthread_mutex_lock(&philo->eat_mutex);
+		philo->n_eaten++;
+		pthread_mutex_unlock(&philo->eat_mutex);
 		ft_unlock_forks(philo);
 		ft_log(info, ft_gettime(), SLEEPING, philo->id);
-		usleep(info->time_to_sleep * 1000);
+		ft_sleep(info->time_to_sleep * 1000);
 		ft_log(info, ft_gettime(), THINKING, philo->id);
 	}
 	return (NULL);

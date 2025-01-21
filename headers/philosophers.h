@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 00:54:19 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 15:08:17 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ typedef struct s_philo
 	int				id;
 	pthread_t		id_t;
 	int				n_eaten;
-	bool			is_dead;
 	time_t			last_eaten;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
 	struct s_philo	*left;
 	struct s_philo	*right;
+	pthread_mutex_t	eat_mutex;
 }					t_philo;
 
 typedef struct s_info
@@ -52,9 +52,11 @@ typedef struct s_info
 	int				n_philos;
 	int				n_to_eat;
 	t_philo			*philos;
+	bool			died;
 	time_t			time_to_die;
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
+	pthread_mutex_t	print_mutex;
 }					t_info;
 
 // numbers.c
@@ -81,6 +83,7 @@ void				*ft_philo(void *arg);
 void				ft_run_threads(t_info **info);
 
 // gettime
+void				ft_sleep(time_t msec);
 time_t				ft_gettime(void);
 
 #endif
