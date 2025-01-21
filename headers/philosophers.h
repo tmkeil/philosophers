@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 15:08:17 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 15:35:57 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_info
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	death_mutex;
 }					t_info;
 
 // numbers.c

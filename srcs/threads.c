@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 15:31:49 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 15:37:44 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	ft_unlock_forks(t_philo *philo)
 int	ft_check_death(t_philo *philo, t_info *info)
 {
 	int	dead;
-	pthread_mutex_lock(&philo->eat_mutex);
+	pthread_mutex_lock(&info->death_mutex);
 	dead = (info->time_to_die <= ft_gettime() - philo->last_eaten);
 	if (dead)
 		info->died = true;
-	pthread_mutex_unlock(&philo->eat_mutex);
+	pthread_mutex_unlock(&info->death_mutex);
 	return (dead || info->died);
 }
 

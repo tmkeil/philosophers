@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/21 15:08:44 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 15:36:52 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	ft_init_info(t_info **info, char **argv)
 	int				params[5];
 
 	ft_parse_parameters(params, sizeof(params) / sizeof(params[0]), argv);
+	pthread_mutex_init(&(*info)->print_mutex, NULL);
+	pthread_mutex_init(&(*info)->death_mutex, NULL);
 	(*info)->philos = NULL;
 	(*info)->died = false;
 	(*info)->n_philos = params[0];
@@ -111,6 +113,5 @@ void	ft_init_data(t_info **info, char **argv)
 		ft_append_new_philo(&((*info)->philos), new, i == (*info)->n_philos - 1);
 		i++;
 	}
-	pthread_mutex_init(&(*info)->print_mutex, NULL);
 	ft_assign_forks_to_philos(&((*info)->philos), *info);
 }
