@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/17 14:06:07 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 02:38:05 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	ft_init_new_philo(t_philo **new, time_t start, int i)
 {
-	int	i;
-
-	i = 0;
 	*new = malloc(sizeof(t_philo));
 	if (!*new)
 		return ;
@@ -35,14 +32,17 @@ static void	ft_append_new_philo(t_philo **philos, t_philo *new, bool is_last)
 
 	if (!philos || !new)
 		return ;
+	// printf("l\n");
 	if (!*philos)
 	{
 		*philos = new;
 		return ;
 	}
+	// printf("l2\n");
 	tmp = *philos;
 	while (tmp->right)
 		tmp = tmp->right;
+	// printf("l3\n");
 	if (!is_last)
 	{
 		new->left = tmp;
@@ -64,6 +64,7 @@ static void	ft_init_info(t_info **info, char **argv)
 
 	ft_parse_parameters(params, sizeof(params) / sizeof(params[0]), argv);
 	(*info)->start = ft_gettime();
+	(*info)->philos = NULL;
 	(*info)->n_philos = params[0];
 	(*info)->n_to_eat = params[4];
 	(*info)->time_to_die = (time_t)params[1];
@@ -97,19 +98,26 @@ static void	ft_assign_forks_to_philos(t_philo **philos, t_info *info)
 	}
 }
 
-void	ft_init_data(t_info *info, char **argv)
+void	ft_init_data(t_info **info, char **argv)
 {
 	int		i;
 	t_philo	*new;
 
 	i = 0;
 	new = NULL;
-	ft_init_info(&info, argv);
-	while (i < info->n_philos)
+	*info = malloc(sizeof(t_info));
+	if (!info)
+		exit(EXIT_FAILURE);
+	ft_init_info(info, argv);
+	// printf("d\n");
+	while (i < (*info)->n_philos)
 	{
-		ft_init_new_philo(&new, info->start, i);
-		ft_append_new_philo(&(info->philos), new, i == info->n_philos - 1);
+		ft_init_new_philo(&new, (*info)->start, i);
+		// printf("k\n");
+		ft_append_new_philo(&((*info)->philos), new, i == (*info)->n_philos - 1);
+		// printf("k2\n");
 		i++;
 	}
-	ft_assign_forks_to_philos(&(info->philos), info);
+	// printf("e\n");
+	ft_assign_forks_to_philos(&((*info)->philos), *info);
 }

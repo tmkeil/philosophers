@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 18:15:11 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/17 13:32:17 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/21 02:37:35 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ static void	ft_write_log(time_t time, int action, int id, int fd)
 
 void	ft_log(t_info *info, time_t time, int act, int id)
 {
-	int	fd;
+	// int	fd;
 
-	fd = open("logs.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd < 0)
-	{
-		perror("open logs.txt");
-		ft_clear_philos(&(info->philos), info->n_philos);
-		exit(EXIT_FAILURE);
-	}
-	ft_write_log(time, act, id, fd);
-	close(fd);
+	// fd = open("logs.txt", O_WRONLY | O_CREAT | O_APPEND, 0644);
+	// if (fd < 0)
+	// {
+	// 	perror("open logs.txt");
+	// 	ft_clear_philos(&(info->philos), info->n_philos);
+	// 	exit(EXIT_FAILURE);
+	// }
+	(void)info;
+	// printf("log\n");
+	ft_write_log(time, act, id, STDOUT_FILENO);
+	// close(fd);
 }
