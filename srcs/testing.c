@@ -6,81 +6,81 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:13:57 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/16 19:50:34 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/25 15:49:11 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+// #include "philosophers.h"
 
-// int	main(int argc, char **argv)
+// // int	main(int argc, char **argv)
+// // {
+// // 	// if (!(argc >= 4 && argc <= 5) || !*argv[0])
+// // 	// 	return (1);
+// // 	return (0);
+// // }
+
+// // threads
+// void	*r1(void *data)
 // {
-// 	// if (!(argc >= 4 && argc <= 5) || !*argv[0])
-// 	// 	return (1);
-// 	return (0);
+// 	int		local;
+// 	t_info	*info;
+
+// 	info = (t_info *)data;
+// 	while (1)
+// 	{
+// 		pthread_mutex_lock(&info->mutex);
+// 		if (info->x >= 1000000)
+// 		{
+// 			local = info->x;
+// 			printf("thread1 x = %i\n", local);
+// 			pthread_mutex_unlock(&info->mutex);
+// 			break ;
+// 		}
+// 		info->x++;
+// 		pthread_mutex_unlock(&info->mutex);
+// 	}
+// 	return (NULL);
 // }
 
-// threads
-void	*r1(void *data)
-{
-	int		local;
-	t_info	*info;
+// void	*r2(void *data)
+// {
+// 	t_info	*info;
 
-	info = (t_info *)data;
-	while (1)
-	{
-		pthread_mutex_lock(&info->mutex);
-		if (info->x >= 1000000)
-		{
-			local = info->x;
-			printf("thread1 x = %i\n", local);
-			pthread_mutex_unlock(&info->mutex);
-			break ;
-		}
-		info->x++;
-		pthread_mutex_unlock(&info->mutex);
-	}
-	return (NULL);
-}
+// 	info = (t_info *)data;
+// 	while (1)
+// 	{
+// 		pthread_mutex_lock(&info->mutex);
+// 		if (info->x >= 2000000)
+// 		{
+// 			printf("thread2 x = %i\n", info->x);
+// 			pthread_mutex_unlock(&info->mutex);
+// 			break ;
+// 		}
+// 		info->x++;
+// 		pthread_mutex_unlock(&info->mutex);
+// 	}
+// 	return (NULL);
+// }
 
-void	*r2(void *data)
-{
-	t_info	*info;
+// int	main(void)
+// {
+// 	pthread_t	t1;
+// 	pthread_t	t2;
+// 	t_info		info;
 
-	info = (t_info *)data;
-	while (1)
-	{
-		pthread_mutex_lock(&info->mutex);
-		if (info->x >= 2000000)
-		{
-			printf("thread2 x = %i\n", info->x);
-			pthread_mutex_unlock(&info->mutex);
-			break ;
-		}
-		info->x++;
-		pthread_mutex_unlock(&info->mutex);
-	}
-	return (NULL);
-}
-
-int	main(void)
-{
-	pthread_t	t1;
-	pthread_t	t2;
-	t_info		info;
-
-	pthread_mutex_init(&info.mutex, NULL);
-	info.x = 0;
-	if (pthread_create(&t1, NULL, &r1, &info))
-		return (1);
-	if (pthread_create(&t2, NULL, &r2, &info))
-		return (3);
-	if (pthread_join(t1, NULL))
-		return (2);
-	if (pthread_join(t2, NULL))
-		return (4);
-	pthread_mutex_destroy(&info.mutex);
-	return (0);
-}
+// 	pthread_mutex_init(&info.mutex, NULL);
+// 	info.x = 0;
+// 	if (pthread_create(&t1, NULL, &r1, &info))
+// 		return (1);
+// 	if (pthread_create(&t2, NULL, &r2, &info))
+// 		return (3);
+// 	if (pthread_join(t1, NULL))
+// 		return (2);
+// 	if (pthread_join(t2, NULL))
+// 		return (4);
+// 	pthread_mutex_destroy(&info.mutex);
+// 	return (0);
+// }
 
 
 

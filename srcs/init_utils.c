@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:56:12 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/17 13:59:44 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/25 15:19:24 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_parse_parameters(int params[], int size, char **argv)
 	while (i < size && argv[i + 1])
 	{
 		params[i] = ft_atol(argv[i + 1]);
-		if (params[i] == -1 || params[i] < 0)
+		if (params[i] < 0)
 		{
 			printf("invalid parameter\n");
 			exit(EXIT_FAILURE);
