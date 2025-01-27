@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 18:15:11 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/22 12:54:01 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/27 18:27:31 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,21 @@ static void	ft_write_log(time_t time, int action, int id, int fd)
 		ft_putstr_fd(" is thinking\n", fd);
 	else if (action == 4)
 		ft_putstr_fd(" died\n", fd);
+	else if (action == 5)
+		ft_putstr_fd(" test test test test test test test\n", fd);
+	else if (action == 6)
+		ft_putstr_fd(" observer runs\n", fd);
+	else if (action == 7)
+		ft_putstr_fd(" observer died\n\n\n", fd);
+	else if (action == 8)
+		ft_putstr_fd(" observer finished\n\n\n", fd);
 	free(s_id);
 	free(s_time);
 }
 
 void	ft_log(t_info *info, time_t time, int act, int id)
 {
-	pthread_mutex_lock(&(info->print_mutex));
+	pthread_mutex_lock(&info->print_mutex);
 	ft_write_log(time, act, id, STDOUT_FILENO);
-	pthread_mutex_unlock(&(info->print_mutex));
+	pthread_mutex_unlock(&info->print_mutex);
 }

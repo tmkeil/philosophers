@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/25 22:26:06 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/27 16:28:44 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,23 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-typedef enum	s_actions
+# define FAIL EXIT_FAILURE
+# define SUCCESS EXIT_SUCCESS
+
+typedef enum s_actions
 {
 	FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
 	DIED
-}				t_actions;
+}					t_actions;
 
 typedef struct s_info
 {
 	int				n_philos;
 	int				n_to_eat;
-	bool			died;
+	bool			finished;
 	time_t			time_to_die;
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
@@ -51,6 +54,7 @@ typedef struct s_philo
 	int				n_eaten;
 	time_t			start_time;
 	time_t			last_eaten;
+	bool			is_eating;
 	pthread_mutex_t	philo_mutex;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
@@ -64,7 +68,7 @@ long				ft_atol(char *s);
 char				*ft_ltoa(long nbr);
 
 // clearing.c
-void				ft_clear_philos(t_philos **philos, int n);
+void				ft_clear_data(t_philos **philos, int n);
 
 // init.c
 void				ft_init_data(t_philos **philos, char **argv);
@@ -79,12 +83,14 @@ int					ft_putstr_fd(char *s, int fd);
 size_t				ft_strlen(const char *s);
 
 // threads
-void				*ft_philo(void *arg);
-void				ft_run_threads(t_philos **philos);
+void					ft_run_threads(t_philos **philos);
 
 // gettime
-int					ft_sleep(time_t msec, t_philos *philo);
-time_t				ft_gettime(void);
-bool	ft_death(t_philos *philo);
+void				ft_sleep(time_t msec);
+time_t				ft_time(void);
+bool				ft_death(t_philos *philo);
+
+// observer
+void				*ft_observer(void *arg);
 
 #endif

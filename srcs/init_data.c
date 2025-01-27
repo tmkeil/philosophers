@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/25 16:26:48 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/27 18:08:48 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void	ft_init_new_philo(t_info *info, t_philos **new, int i)
 	(*new)->right = NULL;
 	(*new)->n_eaten = 0;
 	(*new)->info = info;
+	(*new)->is_eating = false;
+	(*new)->last_eaten = 0;
 	pthread_mutex_init(&(*new)->philo_mutex, NULL);
 }
 
@@ -59,9 +61,9 @@ static void	ft_init_info(t_info **info, char **argv)
 
 	*info = malloc(sizeof(t_info));
 	if (!*info)
-		exit(EXIT_FAILURE);
+		exit(FAIL);
 	ft_parse_parameters(params, sizeof(params) / sizeof(params[0]), argv);
-	(*info)->died = false;
+	(*info)->finished = false;
 	(*info)->n_philos = params[0];
 	(*info)->n_to_eat = params[4];
 	(*info)->time_to_die = (time_t)params[1];
@@ -84,7 +86,7 @@ static void	ft_assign_forks_to_philos(t_philos **philos, t_info *info)
 		if (!philo->fork_l)
 		{
 			perror("pthread_mutex_t");
-			exit(EXIT_FAILURE);
+			exit(FAIL);
 		}
 		pthread_mutex_init(philo->fork_l, NULL);
 		philo = philo->right;
@@ -106,15 +108,12 @@ void	ft_init_data(t_philos **philos, char **argv)
 	i = 0;
 	new = NULL;
 	*philos = NULL;
-	printf("a33\n");
 	ft_init_info(&info, argv);
-	printf("a4\n");
 	while (i < info->n_philos)
 	{
 		ft_init_new_philo(info, &new, i);
 		ft_append_new_philo(philos, new, i == info->n_philos - 1);
 		i++;
 	}
-	printf("a5\n");
 	ft_assign_forks_to_philos(philos, info);
 }

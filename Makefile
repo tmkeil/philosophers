@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/21 18:39:15 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/27 19:04:10 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ INCLUDES = -Iheaders
 OBJSDIR = objs/
 SRCSDIR = srcs/
 
-SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c
+SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c observer.c
 TEST_SRCS = ./srcs/testing.c
-BONUS_SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c
+BONUS_SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c observer.c
 
 SRCS_PATHS = $(addprefix $(SRCSDIR), $(SRCS))
 TESTING_PATHS = $(addprefix $(SRCSDIR), $(TEST_SRCS))
