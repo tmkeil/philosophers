@@ -6,52 +6,52 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/27 19:04:10 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/27 19:56:01 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-NAME = philo
-INCLUDES = -Iheaders
-OBJSDIR = objs/
-SRCSDIR = srcs/
+NAME = philosophers
+INCLUDES = -I./philo/headers
+OBJSDIR = objs/philo/
+SRCSDIR = philo/srcs/
+B_OBJSDIR = objs/bonus/
+B_SRCSDIR = bonus/srcs/
 
 SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c observer.c
-TEST_SRCS = ./srcs/testing.c
 BONUS_SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c observer.c
 
 SRCS_PATHS = $(addprefix $(SRCSDIR), $(SRCS))
-TESTING_PATHS = $(addprefix $(SRCSDIR), $(TEST_SRCS))
-BONUS_PATHS = $(addprefix $(SRCSDIR), $(BONUS_SRCS))
+BONUS_PATHS = $(addprefix $(B_SRCSDIR), $(BONUS_SRCS))
 
-OBJS = $(addprefix $(OBJSDIR), $(SRCS:.c=.o))
-OBJS_TESTING = $(addprefix $(OBJSDIR), $(TEST_SRCS:.c=.o))
-OBJS_BONUS = $(addprefix $(OBJSDIR), $(BONUS_SRCS:.c=.o))
+OBJS = $(SRCS_PATHS:$(SRCSDIR)%.c=$(OBJSDIR)%.o)
+OBJS_BONUS = $(BONUS_PATHS:$(B_SRCSDIR)%.c=$(B_OBJSDIR)%.o)
 
 all: $(NAME)
 
-bonus: $(OBJS_BONUS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(INCLUDES) -o $(NAME)
+bonus: $(OBJS_BONUS) $(B_OBJSDIR)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) $(INCLUDES) -o $(NAME)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(OBJSDIR)
 	$(CC) $(CFLAGS) $(OBJS) $(INCLUDES) -o $(NAME)
 
 $(OBJSDIR)%.o: $(SRCSDIR)%.c
 	mkdir -p $(OBJSDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+$(B_OBJSDIR)%.o: $(B_SRCSDIR)%.c
+	mkdir -p $(B_OBJSDIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
 clean:
-	rm -rf $(OBJSDIR)
+	rm -rf objs/
 
 fclean: clean
 	rm -rf $(NAME) test
 
 re: fclean all
-
-testing:
-	$(CC) $(CFLAGS) $(INCLUDES) $(TEST_SRCS) -o test
 
 assembly:
 	$(CC) -S srcs/philosophers.c
