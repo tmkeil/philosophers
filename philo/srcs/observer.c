@@ -15,17 +15,15 @@
 static int	ft_starved(t_philos *philo, t_info *info)
 {
 	time_t	fasting;
+	time_t	last_meal;
 
 	pthread_mutex_lock(&philo->philo_mutex);
-	;
 	fasting = ft_time() - philo->last_eaten;
-	// printf("philo %i is fasting %li\n", philo->id, fasting);
-	if (philo->last_eaten && !philo->is_eating && fasting >= info->time_to_die)
-	{
-		ft_log(info, ft_time(), DIED, philo->id);
-		return (pthread_mutex_unlock(&philo->philo_mutex), 1);
-	}
-	return (pthread_mutex_unlock(&philo->philo_mutex), 0);
+	last_meal = philo->last_eaten;
+	pthread_mutex_unlock(&philo->philo_mutex);
+	if (last_meal && !philo->is_eating && fasting >= info->time_to_die)
+		return (ft_log(info, ft_time(), DIED, philo->id), 1);
+	return (0);
 }
 
 static int	ft_is_finished(t_philos *philo, int n)
@@ -42,13 +40,14 @@ static int	ft_is_finished(t_philos *philo, int n)
 		if (ft_starved(philo, info))
 			return (1);
 		pthread_mutex_lock(&philo->philo_mutex);
-		;
-		if (philo->n_eaten >= info->n_to_eat && info->n_to_eat > 0)
+		if (philo->n_eaten >= info->n_to_eat)
 			count++;
 		pthread_mutex_unlock(&philo->philo_mutex);
 		philo = philo->right;
 	}
-	if (count == n)
+	if (info->n_to_eat < 0)
+		return (0);
+	else if (count == n)
 		return (1);
 	return (0);
 }
@@ -62,14 +61,9 @@ void	*ft_observer(void *arg)
 	n_philos = philos->info->n_philos;
 	while (1)
 	{
-		// // test
-		// ft_log(philos->info, ft_time(), 6, philos->id);
-		// // test
 		if (ft_is_finished(philos, n_philos))
 		{
-			// ft_log(philos->info, ft_time(), 8, philos->id);
 			pthread_mutex_lock(&philos->info->death_mutex);
-			;
 			philos->info->finished = true;
 			pthread_mutex_unlock(&philos->info->death_mutex);
 			break ;
