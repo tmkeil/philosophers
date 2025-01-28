@@ -14,41 +14,24 @@
 
 bool	ft_death(t_philos *philo)
 {
-	t_info	*info;
+	bool	dead;
 
-	// printf("check death info addr: %p\n", philo->info);
-	info = philo->info;
-	// printf("check death info addr: %p\n", info);
-	pthread_mutex_lock(&info->death_mutex);
-	if (info->finished)
-		return (pthread_mutex_unlock(&info->death_mutex), true);
-	return (pthread_mutex_unlock(&info->death_mutex), false);
-}
-
-void	ft_release_forks(t_philos *philo)
-{
-	pthread_mutex_unlock(philo->fork_l);
-	pthread_mutex_unlock(philo->fork_r);
+	pthread_mutex_lock(&philo->info->death_mutex);
+	dead = philo->info->finished;
+	pthread_mutex_unlock(&info->death_mutex);
+	return (dead);
 }
 
 static void	ft_grab_forks(t_philos *philo)
 {
-	pthread_mutex_t	*first_fork;
-	pthread_mutex_t	*second_fork;
+	pthread_mutex_t	*first;
+	pthread_mutex_t	*second;
 
-	if (philo->id % 2 == 0)
-	{
-		first_fork = philo->fork_l;
-		second_fork = philo->fork_r;
-	}
-	else
-	{
-		first_fork = philo->fork_r;
-		second_fork = philo->fork_l;
-	}
-	pthread_mutex_lock(first_fork);
+	first = philo->fork_l * (philo->id % 2 == 0) + philo->fork_r * (philo->id % 2 != 0);
+	second = philo->fork_r * (philo->id % 2 == 0) + philo->fork_l * (philo->id % 2 != 0)
+	pthread_mutex_lock(first);
 	ft_log(philo->info, ft_time(), FORK, philo->id);
-	pthread_mutex_lock(second_fork);
+	pthread_mutex_lock(second);
 	ft_log(philo->info, ft_time(), FORK, philo->id);
 }
 
@@ -64,9 +47,9 @@ static void	ft_eat(t_philos *philo, t_info *info)
 	philo->last_eaten = ft_time();
 	philo->n_eaten++;
 	philo->is_eating = false;
-	// printf("philo id: %i last eaten set to %li nbr eaten set to %i\n", philo->id, philo->last_eaten, philo->n_eaten);
 	pthread_mutex_unlock(&philo->philo_mutex);
-	ft_release_forks(philo);
+	pthread_mutex_unlock(philo->fork_l);
+	pthread_mutex_unlock(philo->fork_r);
 }
 
 static void	*ft_philo(void *arg)
