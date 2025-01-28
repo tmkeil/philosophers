@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 13:31:51 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 14:37:15 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,13 @@ static void	*ft_philo(void *arg)
 	pthread_mutex_unlock(&philo->philo_mutex);
 	while (!ft_death(philo))
 	{
-		if (philo->info->n_philos < 2)
+		if (philo->info->n_philos == 1)
 		{
+			pthread_mutex_lock(philo->fork_l);
 			ft_log(philo->info, ft_time(), FORK, philo->id);
-			while (1)
-			{
-				if (ft_death(philo))
-					return (NULL);
-			}
+			ft_sleep(philo->info->time_to_die);
+			pthread_mutex_unlock(philo->fork_l);
+			return (NULL);
 		}
 		ft_eat(philo, philo->info);
 		ft_log(philo->info, ft_time(), SLEEPING, philo->id);
@@ -102,7 +101,8 @@ void	ft_run_threads(t_philos **philos)
 	{
 		if (pthread_create(&philo->id_t, NULL, &ft_philo, philo) != SUCCESS)
 			return ;
-		philo = philo->right;
+		if ((*philos)->info->n_philos > 1)
+			philo = philo->right;
 	}
 	if (pthread_join(philo->id_t, NULL) != SUCCESS)
 		return ;
@@ -110,6 +110,7 @@ void	ft_run_threads(t_philos **philos)
 	{
 		if (pthread_join(philo->id_t, NULL) != SUCCESS)
 			return ;
-		philo = philo->right;
+		if ((*philos)->info->n_philos > 1)
+			philo = philo->right;
 	}
 }

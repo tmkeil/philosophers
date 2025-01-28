@@ -6,13 +6,13 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:56:12 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/27 13:52:38 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 14:22:21 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	ft_parse_parameters(int params[], int size, char **argv)
+int	ft_parse_parameters(int params[], int size, char **argv)
 {
 	int	i;
 
@@ -26,8 +26,9 @@ void	ft_parse_parameters(int params[], int size, char **argv)
 		if (params[i] <= 0)
 		{
 			printf("invalid parameter\n");
-			exit(EXIT_FAILURE);
+			return (FAIL);
 		}
 		i++;
 	}
+	return (SUCCESS);
 }

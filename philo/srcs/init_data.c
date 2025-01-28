@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 13:24:06 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 14:29:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static int	ft_init_info(t_info **info, char **argv)
 	*info = malloc(sizeof(t_info));
 	if (!*info)
 		return (FAIL);
-	ft_parse_parameters(params, sizeof(params) / sizeof(params[0]), argv);
+	if (ft_parse_parameters(params, sizeof(params) / sizeof(params[0]), argv) != SUCCESS)
+		return (FAIL);
 	(*info)->finished = false;
 	(*info)->n_philos = params[0];
 	(*info)->n_to_eat = params[4];
@@ -89,6 +90,11 @@ static int	ft_assign_forks_to_philos(t_philos **philos, t_info *info)
 		if (!philo->fork_l)
 			return (FAIL);
 		pthread_mutex_init(philo->fork_l, NULL);
+		if (info->n_philos == 1)
+		{
+			philo->fork_r = philo->fork_l;
+			return (SUCCESS);
+		}
 		philo = philo->right;
 		i++;
 	}
