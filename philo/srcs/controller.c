@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/27 19:01:59 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 12:40:53 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	ft_is_finished(t_philos *philo, int n)
 	return (0);
 }
 
-void	*ft_observer(void *arg)
+void	*ft_control(void *arg)
 {
 	int			n_philos;
 	t_philos	*philos;

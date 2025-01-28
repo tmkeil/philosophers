@@ -6,11 +6,23 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:05:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/27 17:15:07 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 13:00:45 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int	main(int argc, char **argv)
+{
+	t_philos	*philos;
+
+	if (!(argc >= 5 && argc <= 6) || !*argv[0])
+		return (1);
+	ft_init_data(&philos, argv);
+	ft_run_threads(&philos);
+	ft_clear_data(&philos, philos->info->n_philos);
+	return (0);
+}
 
 // void	ft_test_philos(t_info *info, t_philos *philos, int n)
 // {
@@ -34,15 +46,3 @@
 // 		philos = philos->right;
 // 	}
 // }
-
-int	main(int argc, char **argv)
-{
-	t_philos	*philos;
-
-	if (!(argc >= 5 && argc <= 6) || !*argv[0])
-		return (1);
-	ft_init_data(&philos, argv);
-	ft_run_threads(&philos);
-	// ft_clear_data(&(info->philos), info->n_philos);
-	return (0);
-}

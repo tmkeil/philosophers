@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/27 16:28:44 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 12:49:44 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,13 @@ int					ft_putstr_fd(char *s, int fd);
 size_t				ft_strlen(const char *s);
 
 // threads
-void					ft_run_threads(t_philos **philos);
+void				ft_run_threads(t_philos **philos);
 
 // gettime
 void				ft_sleep(time_t msec);
 time_t				ft_time(void);
-bool				ft_death(t_philos *philo);
 
 // observer
-void				*ft_observer(void *arg);
+void				*ft_control(void *arg);
 
 #endif
