@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 12:42:53 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 13:31:51 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,15 @@ static void	*ft_philo(void *arg)
 	pthread_mutex_unlock(&philo->philo_mutex);
 	while (!ft_death(philo))
 	{
+		if (philo->info->n_philos < 2)
+		{
+			ft_log(philo->info, ft_time(), FORK, philo->id);
+			while (1)
+			{
+				if (ft_death(philo))
+					return (NULL);
+			}
+		}
 		ft_eat(philo, philo->info);
 		ft_log(philo->info, ft_time(), SLEEPING, philo->id);
 		ft_sleep(philo->info->time_to_sleep);

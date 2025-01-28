@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 12:49:44 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 13:17:52 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char				*ft_ltoa(long nbr);
 void				ft_clear_data(t_philos **philos, int n);
 
 // init.c
-void				ft_init_data(t_philos **philos, char **argv);
+int					ft_init_data(t_philos **philos, char **argv);
 void				ft_parse_parameters(int params[], int size, char **argv);
 
 // logging.c

@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/27 18:08:48 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/28 13:24:06 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	ft_init_new_philo(t_info *info, t_philos **new, int i)
 	(*new)->info = info;
 	(*new)->is_eating = false;
 	(*new)->last_eaten = 0;
+	(*new)->fork_l = NULL;
+	(*new)->fork_r = NULL;
 	pthread_mutex_init(&(*new)->philo_mutex, NULL);
 }
 
@@ -55,13 +57,13 @@ static void	ft_append_new_philo(t_philos **philos, t_philos *new, bool is_last)
 	}
 }
 
-static void	ft_init_info(t_info **info, char **argv)
+static int	ft_init_info(t_info **info, char **argv)
 {
 	int		params[5];
 
 	*info = malloc(sizeof(t_info));
 	if (!*info)
-		exit(FAIL);
+		return (FAIL);
 	ft_parse_parameters(params, sizeof(params) / sizeof(params[0]), argv);
 	(*info)->finished = false;
 	(*info)->n_philos = params[0];
@@ -71,9 +73,10 @@ static void	ft_init_info(t_info **info, char **argv)
 	(*info)->time_to_sleep = (time_t)params[3];
 	pthread_mutex_init(&(*info)->print_mutex, NULL);
 	pthread_mutex_init(&(*info)->death_mutex, NULL);
+	return (SUCCESS);
 }
 
-static void	ft_assign_forks_to_philos(t_philos **philos, t_info *info)
+static int	ft_assign_forks_to_philos(t_philos **philos, t_info *info)
 {
 	int			i;
 	t_philos	*philo;
@@ -84,10 +87,7 @@ static void	ft_assign_forks_to_philos(t_philos **philos, t_info *info)
 	{
 		philo->fork_l = malloc(sizeof(pthread_mutex_t));
 		if (!philo->fork_l)
-		{
-			perror("pthread_mutex_t");
-			exit(FAIL);
-		}
+			return (FAIL);
 		pthread_mutex_init(philo->fork_l, NULL);
 		philo = philo->right;
 		i++;
@@ -97,9 +97,10 @@ static void	ft_assign_forks_to_philos(t_philos **philos, t_info *info)
 		philo->fork_r = philo->right->fork_l;
 		philo = philo->right;
 	}
+	return (SUCCESS);
 }
 
-void	ft_init_data(t_philos **philos, char **argv)
+int	ft_init_data(t_philos **philos, char **argv)
 {
 	int			i;
 	t_info		*info;
@@ -108,12 +109,15 @@ void	ft_init_data(t_philos **philos, char **argv)
 	i = 0;
 	new = NULL;
 	*philos = NULL;
-	ft_init_info(&info, argv);
+	if (ft_init_info(&info, argv) != SUCCESS)
+		return (FAIL);
 	while (i < info->n_philos)
 	{
 		ft_init_new_philo(info, &new, i);
 		ft_append_new_philo(philos, new, i == info->n_philos - 1);
 		i++;
 	}
-	ft_assign_forks_to_philos(philos, info);
+	if (ft_assign_forks_to_philos(philos, info) != SUCCESS)
+		return (FAIL);
+	return (SUCCESS);
 }
