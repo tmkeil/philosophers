@@ -14,14 +14,16 @@
 
 static int	ft_starved(t_philos *philo, t_info *info)
 {
+	bool	eating;
 	time_t	fasting;
 	time_t	last_meal;
 
 	pthread_mutex_lock(&philo->philo_mutex);
 	fasting = ft_time() - philo->last_eaten;
 	last_meal = philo->last_eaten;
+	eating = philo->is_eating;
 	pthread_mutex_unlock(&philo->philo_mutex);
-	if (last_meal && !philo->is_eating && fasting >= info->time_to_die)
+	if (last_meal && !eating && fasting >= info->time_to_die)
 		return (ft_log(info, ft_time(), DIED, philo->id), 1);
 	return (0);
 }
