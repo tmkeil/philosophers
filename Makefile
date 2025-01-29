@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/28 12:50:08 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/29 16:09:51 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ SRCSDIR = philo/srcs/
 B_OBJSDIR = objs/bonus/
 B_SRCSDIR = bonus/srcs/
 
-SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c controller.c
-BONUS_SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c controller.c
+SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c controller.c state.c thread_utils.c
+BONUS_SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c controller.c state.c thread_utils.c
 
 SRCS_PATHS = $(addprefix $(SRCSDIR), $(SRCS))
 BONUS_PATHS = $(addprefix $(B_SRCSDIR), $(BONUS_SRCS))

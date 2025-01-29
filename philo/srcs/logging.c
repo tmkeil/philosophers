@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 18:15:11 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 12:59:34 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 15:37:41 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static void	ft_write_log(time_t time, int action, int id, t_info *info)
 		ft_putstr_fd(" is thinking\n", 1);
 	else if (action == 4)
 		ft_putstr_fd(" died\n", 1);
-	else if (action == 6)
-		ft_putstr_fd(" controller runs\n", 1);
 	pthread_mutex_unlock(&info->print_mutex);
 	free(s_id);
 	free(s_time);

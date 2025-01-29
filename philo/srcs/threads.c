@@ -6,59 +6,11 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 14:37:15 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 16:08:25 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-static bool	ft_death(t_philos *philo)
-{
-	bool	dead;
-
-	pthread_mutex_lock(&philo->info->death_mutex);
-	dead = philo->info->finished;
-	pthread_mutex_unlock(&philo->info->death_mutex);
-	return (dead);
-}
-
-static void	ft_grab_forks(t_philos *philo)
-{
-	pthread_mutex_t	*first;
-	pthread_mutex_t	*second;
-
-	if (philo->id % 2 == 0)
-	{
-		first = philo->fork_l;
-		second = philo->fork_r;
-	}
-	else
-	{
-		first = philo->fork_r;
-		second = philo->fork_l;
-	}
-	pthread_mutex_lock(first);
-	ft_log(philo->info, ft_time(), FORK, philo->id);
-	pthread_mutex_lock(second);
-	ft_log(philo->info, ft_time(), FORK, philo->id);
-}
-
-static void	ft_eat(t_philos *philo, t_info *info)
-{
-	ft_grab_forks(philo);
-	pthread_mutex_lock(&philo->philo_mutex);
-	philo->is_eating = true;
-	pthread_mutex_unlock(&philo->philo_mutex);
-	ft_log(info, ft_time(), EATING, philo->id);
-	ft_sleep(info->time_to_eat);
-	pthread_mutex_lock(&philo->philo_mutex);
-	philo->last_eaten = ft_time();
-	philo->n_eaten++;
-	philo->is_eating = false;
-	pthread_mutex_unlock(&philo->philo_mutex);
-	pthread_mutex_unlock(philo->fork_l);
-	pthread_mutex_unlock(philo->fork_r);
-}
 
 static void	*ft_philo(void *arg)
 {
@@ -73,16 +25,15 @@ static void	*ft_philo(void *arg)
 	{
 		if (philo->info->n_philos == 1)
 		{
-			pthread_mutex_lock(philo->fork_l);
 			ft_log(philo->info, ft_time(), FORK, philo->id);
 			ft_sleep(philo->info->time_to_die);
-			pthread_mutex_unlock(philo->fork_l);
 			return (NULL);
 		}
+		ft_grab_forks(philo);
 		ft_eat(philo, philo->info);
-		ft_log(philo->info, ft_time(), SLEEPING, philo->id);
-		ft_sleep(philo->info->time_to_sleep);
-		ft_log(philo->info, ft_time(), THINKING, philo->id);
+		ft_release_forks(philo->fork_l, philo->fork_r);
+		ft_nap(philo);
+		ft_think(philo);
 	}
 	return (NULL);
 }

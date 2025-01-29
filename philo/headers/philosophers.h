@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 14:21:30 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 16:09:34 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_info
 	time_t			time_to_die;
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
-	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 }					t_info;
@@ -91,5 +90,16 @@ time_t				ft_time(void);
 
 // observer
 void				*ft_control(void *arg);
+
+// states
+void				ft_eat(t_philos *philo, t_info *info);
+void				ft_nap(t_philos *philo);
+void				ft_think(t_philos *philo);
+
+// thread_utils
+bool				ft_death(t_philos *philo);
+void				ft_grab_forks(t_philos *philo);
+void				ft_release_forks(pthread_mutex_t *left,
+						pthread_mutex_t *right);
 
 #endif

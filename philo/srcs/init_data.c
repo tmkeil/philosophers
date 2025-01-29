@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 14:29:08 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 14:13:00 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,13 @@ static void	ft_append_new_philo(t_philos **philos, t_philos *new, bool is_last)
 
 static int	ft_init_info(t_info **info, char **argv)
 {
-	int		params[5];
+	int	params[5];
 
 	*info = malloc(sizeof(t_info));
 	if (!*info)
 		return (FAIL);
-	if (ft_parse_parameters(params, sizeof(params) / sizeof(params[0]), argv) != SUCCESS)
+	if (ft_parse_parameters(params, sizeof(params) / sizeof(params[0]),
+			argv) != SUCCESS)
 		return (FAIL);
 	(*info)->finished = false;
 	(*info)->n_philos = params[0];

@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:13:57 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/25 15:49:11 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 14:12:44 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 // // 	// 	return (1);
 // // 	return (0);
 // // }
-
 // // threads
 // void	*r1(void *data)
 // {
@@ -82,16 +81,6 @@
 // 	return (0);
 // }
 
-
-
-
-
-
-
-
-
-
-
 // // example of retrieving the time
 // int	main(void)
 // {
@@ -124,6 +113,7 @@
 // 	s = ds % 60;
 // 	// Millisekunden in current second
 // 	ms = tp.tv_usec / 1000;
-// 	printf("hour: %i, minute: %i, seconds: %i, milliseconds: %i\n", dh, m, s, ms);
+// 	printf("hour: %i, minute: %i, seconds: %i, milliseconds: %i\n", dh, m, s,
+		// ms);
 // 	return (0);
 // }

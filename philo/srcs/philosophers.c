@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:05:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/28 14:34:32 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 16:10:58 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		return (FAIL);
 	ft_run_threads(&philos);
 	ft_clear_data(&philos, philos->info->n_philos);
-	return (0);
+	return (SUCCESS);
 }
 
 // void	ft_test_philos(t_info *info, t_philos *philos, int n)
@@ -41,8 +41,10 @@ int	main(int argc, char **argv)
 // 		printf("philos->id_t = %lu\n", (unsigned long)philos->id_t);
 // 		printf("philos->n_eaten = %i\n", philos->n_eaten);
 // 		printf("philos->info = %p\n", philos->info);
-// 		printf("philos->fork_l = %p, philos->fork_r = %p\n", philos->fork_l, philos->fork_r);
-// 		printf("current = %p, left = %p, right = %p\n", philos, philos->left, philos->right);
+// 		printf("philos->fork_l = %p, philos->fork_r = %p\n", philos->fork_l,
+// 			philos->fork_r);
+// 		printf("current = %p, left = %p, right = %p\n", philos, philos->left,
+// 			philos->right);
 // 		printf("\n\n");
 // 		philos = philos->right;
 // 	}
