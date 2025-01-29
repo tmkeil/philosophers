@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/29 22:41:39 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 23:05:25 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,8 @@ static int	ft_is_dead(t_philos *philo)
 	return (0);
 }
 
-int	ft_reset_n_sleep(int *n, int *eaten, t_philos *philo)
+int	ft_reset_n_sleep(int *n, int *eaten, int number_of_philos)
 {
-	int	number_of_philos;
-
-	pthread_mutex_lock(&philo->info->info_mutex);
-	number_of_philos = philo->info->n_philos;
-	pthread_mutex_unlock(&philo->info->info_mutex);
 	if (*eaten == number_of_philos)
 		return (1);
 	if (*n == number_of_philos)
@@ -52,25 +47,21 @@ int	ft_reset_n_sleep(int *n, int *eaten, t_philos *philo)
 	return (0);
 }
 
-static int	ft_eaten_enough(t_philos *philo)
+static int	ft_eaten_enough(t_philos *philo, int n_to_eat)
 {
 	int	number;
-	int	n_to_eat;
 
 	pthread_mutex_lock(&philo->philo_mutex);
 	number = philo->n_eaten;
 	pthread_mutex_unlock(&philo->philo_mutex);
-	pthread_mutex_lock(&philo->info->info_mutex);
-	n_to_eat = philo->info->n_to_eat;
-	pthread_mutex_unlock(&philo->info->info_mutex);
 	if (number >= n_to_eat && n_to_eat != -1)
 		return (1);
 	return (0);
 }
 
-void	*ft_eaten_a_lot(t_philos *philo, int *eaten)
+void	*ft_eaten_a_lot(t_philos *philo, int *eaten, int n_to_eat)
 {
-	if (ft_eaten_enough(philo))
+	if (ft_eaten_enough(philo, n_to_eat))
 		(*eaten)++;
 	return (NULL);
 }
@@ -79,18 +70,24 @@ void	*ft_control(void *arg)
 {
 	int			n;
 	int			eaten;
+	int			n_to_eat;
+	int			number_of_philos;
+	
 	t_philos	*philo;
-
 	philo = (t_philos *)arg;
 	eaten = 0;
 	n = 0;
+	pthread_mutex_lock(&philo->info->info_mutex);
+	n_to_eat = philo->info->n_to_eat;
+	number_of_philos = philo->info->n_philos;
+	pthread_mutex_unlock(&philo->info->info_mutex);
 	while (1)
 	{
-		if (ft_is_dead(philo) || ft_eaten_a_lot(philo, &eaten))
+		if (ft_is_dead(philo) || ft_eaten_a_lot(philo, &eaten, n_to_eat))
 			break ;
 		n++;
 		philo = philo->right;
-		if (ft_reset_n_sleep(&n, &eaten, philo))
+		if (ft_reset_n_sleep(&n, &eaten, number_of_philos))
 			break ;
 	}
 	pthread_mutex_lock(&philo->info->death_mutex);
