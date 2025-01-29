@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:28:04 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/29 16:36:01 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 16:36:58 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_clear_data(t_philos **philos, int n)
 	t_info		*info;
 
 	if (!philos || !*philos)
-		return;
+		return ;
 	info = (*philos)->info;
 	while (n--)
 	{
