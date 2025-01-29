@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/29 16:21:12 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/29 16:30:30 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,6 @@ assembly:
 	$(CC) -S srcs/philosophers.c
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./philosophers
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./philo
 
 .PHONY: all clean fclean re bonus

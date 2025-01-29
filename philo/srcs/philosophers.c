@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:05:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/29 16:10:58 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 16:31:35 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv)
 		return (FAIL);
 	ft_run_threads(&philos);
 	ft_clear_data(&philos, philos->info->n_philos);
+	system("leaks philo");
 	return (SUCCESS);
 }
 
