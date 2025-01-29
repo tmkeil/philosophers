@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:13:57 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/29 14:12:44 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/29 18:21:49 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@
 // 	gettimeofday(&tp, &tz);
 // 	current_milli_since_1970 = (tp.tv_sec * 1000) + (tp.tv_usec / 1000);
 // 	// tp.tv_sec = number of seconds since 01.01.1970
-// 	// number of seconds since day start at 0 o'clock
+// 	// number of seconds since day start_philo at 0 o'clock
 // 	printf("current millis: %li\n", current_milli_since_1970);
 // 	ds = tp.tv_sec % 86400;
-// 	// Millisekunden since day start
+// 	// Millisekunden since day start_philo
 // 	milli_day = ds * 1000 + tp.tv_usec / 1000;
-// 	// number of minutes since day start
+// 	// number of minutes since day start_philo
 // 	dm = ds / 60;
-// 	// number of hours since day start
+// 	// number of hours since day start_philo
 // 	dh = ds / 3600 - tz.tz_minuteswest / 60;
 // 	// current minutes
 // 	m = dm % 60;

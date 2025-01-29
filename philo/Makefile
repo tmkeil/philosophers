@@ -6,19 +6,19 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/29 16:30:30 by tkeil            ###   ########.fr        #
+#    Updated: 2025/01/29 22:30:11 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -O3
 
 NAME = philo
 INCLUDES = -I./headers
 OBJSDIR = objs/
 SRCSDIR = srcs/
 
-SRCS = philosophers.c numbers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c controller.c state.c thread_utils.c
+SRCS = philosophers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c controller.c state.c thread_utils.c
 
 SRCS_PATHS = $(addprefix $(SRCSDIR), $(SRCS))
 
@@ -46,5 +46,8 @@ assembly:
 
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./philo
+
+helgrind:
+	valgrind --tool=helgrind ./philo 800 200 200 7
 
 .PHONY: all clean fclean re bonus
