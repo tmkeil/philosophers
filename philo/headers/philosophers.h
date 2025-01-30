@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 15:18:29 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/30 18:22:25 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define FAIL EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
+# define MAX_PHILOS 200
 
 typedef enum s_actions
 {
@@ -65,7 +66,6 @@ typedef struct s_philo
 
 typedef struct s_control_vars
 {
-	int				ids[200];
 	int				n_philos;
 	int				n_to_eat;
 	time_t			time_to_die;
@@ -81,16 +81,26 @@ typedef struct s_philo_vars
 	int				id;
 }				t_philo_vars;
 
+typedef struct	s_garbage
+{
+	void			*ptr;
+	pthread_mutex_t	*mutex;
+	
+}				t_garbage;
+
 // numbers.c
 long				ft_atol(char *s);
 
 // clearing.c
 void				ft_clear_data(t_philos **philos, int n);
 void				ft_clear_philos(t_philos **philos, int n);
+void				ft_destroy_forks(t_info *info, pthread_mutex_t *forks);
 
 // init.c
 int					ft_init_data(t_philos **philos, char **argv);
-int					ft_parse_parameters(int params[], int size, char **argv);
+int					ft_get_params(int params[], int size, char **argv);
+void				ft_destroy_mutexes(t_info **info, int n);
+void 				ft_assign_values(t_info **info, int params[], time_t time);
 
 // logging.c
 void				ft_log(t_info *info, time_t time, int act, int id);

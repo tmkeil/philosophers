@@ -6,11 +6,20 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:28:04 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/29 22:42:27 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/30 18:28:47 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+void	ft_destroy_forks(t_info *info, pthread_mutex_t *forks)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->n_philos)
+		pthread_mutex_destroy(&forks[i++]);
+}
 
 void	ft_clear_data(t_philos **philos, int n)
 {
@@ -39,8 +48,8 @@ void	ft_clear_data(t_philos **philos, int n)
 	*philos = NULL;
 }
 
-void	ft_clear_philos(t_philos **philos, int n)
+void	ft_clr_phils(t_philos **philos)
 {
-	(void)philos;
-	(void)n;
+	free(*philos);
+	*philos = NULL;
 }

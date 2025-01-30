@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:56:12 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/29 20:14:33 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/30 18:17:00 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ long	ft_atol(char *s)
 	return (val * p);
 }
 
-int	ft_parse_parameters(int params[], int size, char **argv)
+int	ft_get_params(int params[], int size, char **argv)
 {
 	int	i;
 
@@ -51,12 +51,45 @@ int	ft_parse_parameters(int params[], int size, char **argv)
 	while (i < size && argv[i + 1])
 	{
 		params[i] = ft_atol(argv[i + 1]);
-		if (params[i] <= 0)
+		if (params[i] <= 0 || params[i] > INT_MAX)
 		{
-			printf("invalid parameter\n");
+			printf("Parameter too small or greater than INT_MAX\n");
 			return (FAIL);
 		}
 		i++;
 	}
+	if (params[0] > MAX_PHILOS)
+	{
+		printf("More than 200 philos are not allowed\n");
+		return (FAIL);
+	}
 	return (SUCCESS);
+}
+
+void ft_assign_values(t_info **info, int params[], time_t time)
+{
+	(*info)->start_programm = time;
+	(*info)->finished = false;
+	(*info)->n_philos = params[0];
+	(*info)->n_to_eat = params[4];
+	(*info)->time_to_die = (time_t)params[1];
+	(*info)->time_to_eat = (time_t)params[2];
+	(*info)->time_to_sleep = (time_t)params[3];
+}
+
+void	ft_destroy_mutexes(t_info **info, int n)
+{
+	if (n == 1)
+		pthread_mutex_destroy(&(*info)->print_mutex);
+	else if (n == 2)
+	{
+		pthread_mutex_destroy(&(*info)->print_mutex);
+		pthread_mutex_destroy(&(*info)->death_mutex);
+	}
+	else if (n == 3)
+	{
+		pthread_mutex_destroy(&(*info)->print_mutex);
+		pthread_mutex_destroy(&(*info)->death_mutex);
+		pthread_mutex_destroy(&(*info)->info_mutex);
+	}
 }
