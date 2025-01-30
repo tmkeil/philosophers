@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/29 22:42:42 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/30 15:18:29 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ typedef struct s_philo
 	int				id;
 	pthread_t		id_t;
 	int				n_eaten;
-	time_t			start_philo;
 	time_t			last_eaten;
 	bool			is_eating;
 	pthread_mutex_t	philo_mutex;
@@ -63,6 +62,24 @@ typedef struct s_philo
 	struct s_philo	*right;
 	t_info			*info;
 }					t_philos;
+
+typedef struct s_control_vars
+{
+	int				ids[200];
+	int				n_philos;
+	int				n_to_eat;
+	time_t			time_to_die;
+	time_t			start;
+}				t_control_vars;
+
+typedef struct s_philo_vars
+{
+	time_t			time_to_sleep;
+	time_t			time_to_eat;
+	time_t			start;
+	int				n_philos;
+	int				id;
+}				t_philo_vars;
 
 // numbers.c
 long				ft_atol(char *s);
@@ -85,24 +102,28 @@ size_t				ft_strlen(const char *s);
 
 // threads
 void				ft_run_threads(t_philos *philos);
+void				*ft_philo(void *arg);
 
 // gettime
 void				ft_sleep(time_t msec, t_philos *philo);
-long				ft_time(t_philos *philo);
+long				ft_time(time_t start);
 time_t				ft_timestamp(void);
 
 // observer
 void				*ft_control(void *arg);
 
 // states
-void				ft_eat(t_philos *philo, t_info *info, int id);
-void				ft_nap(t_philos *philo, int id);
-void				ft_think(t_philos *philo, int id);
+void				ft_eat(t_philos *philo, t_info *info, int id, time_t start);
+void				ft_nap(t_philos *philo, int id, time_t start);
+void				ft_think(t_philos *philo, int id, time_t start);
 
 // thread_utils
 bool				ft_death(t_philos *philo);
-void				ft_grab_forks(t_philos *philo, int id);
+void				ft_grab_forks(t_philos *philo, int id, time_t start);
 void				ft_release_forks(pthread_mutex_t *left,
 						pthread_mutex_t *right);
+int					ft_join_threads(t_philos *philo, int number_of_philos,
+						pthread_t controller);
+int					ft_start_threads(t_philos *philo, int *number_of_philos);
 
 #endif
