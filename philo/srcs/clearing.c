@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:28:04 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 18:28:47 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/31 13:16:38 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,24 @@ void	ft_destroy_forks(t_info *info, pthread_mutex_t *forks)
 		pthread_mutex_destroy(&forks[i++]);
 }
 
-void	ft_clear_data(t_philos **philos, int n)
+void	ft_clear_data(t_philos **philos)
 {
-	t_philos	*tmp;
+	int			i;
 	t_info		*info;
 
-	if (!philos || !*philos)
-		return ;
-	info = (*philos)->info;
-	while (n--)
+	i = 0;
+	info = (*philos)[0].info;
+	while (i < (*philos)->info->n_philos)
 	{
-		tmp = (*philos)->right;
-		if ((*philos)->fork_l)
-		{
-			free((*philos)->fork_l);
-			pthread_mutex_destroy((*philos)->fork_l);
-		}
-		pthread_mutex_destroy(&(*philos)->philo_mutex);
-		free(*philos);
-		*philos = tmp;
+		pthread_mutex_destroy(&(*philos)[i].philo_mutex);
+		pthread_mutex_destroy((*philos)[i].fork_l);
+		i++;
 	}
+	free(*philos);
+	*philos = NULL;
 	pthread_mutex_destroy(&info->print_mutex);
 	pthread_mutex_destroy(&info->death_mutex);
 	pthread_mutex_destroy(&info->info_mutex);
-	free((*philos)->info);
-	*philos = NULL;
-}
-
-void	ft_clr_phils(t_philos **philos)
-{
-	free(*philos);
-	*philos = NULL;
+	free(info);
+	info = NULL;
 }

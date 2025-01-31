@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:08:41 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 14:18:56 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/31 13:04:20 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_grab_forks(t_philos *philo, int id, time_t start)
 	pthread_mutex_t	*first;
 	pthread_mutex_t	*second;
 
-	if (philo->id % 2 == 0)
+	if (id % 2 == 0)
 	{
 		first = philo->fork_l;
 		second = philo->fork_r;
@@ -54,15 +54,14 @@ int	ft_start_threads(t_philos *philo, int *number_of_philos)
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&philo->info->info_mutex);
-	*number_of_philos = philo->info->n_philos;
-	pthread_mutex_unlock(&philo->info->info_mutex);
-	while (i++ < *number_of_philos)
+	pthread_mutex_lock(&philo[0].info->info_mutex);
+	*number_of_philos = philo[0].info->n_philos;
+	pthread_mutex_unlock(&philo[0].info->info_mutex);
+	while (i < *number_of_philos)
 	{
-		if (pthread_create(&philo->id_t, NULL, &ft_philo, philo) != SUCCESS)
+		if (pthread_create(&philo[i].id_t, NULL, &ft_philo, &philo[i]) != SUCCESS)
 			return (FAIL);
-		if (*number_of_philos > 1)
-			philo = philo->right;
+		i++;
 	}
 	return (SUCCESS);
 }
@@ -70,17 +69,16 @@ int	ft_start_threads(t_philos *philo, int *number_of_philos)
 int	ft_join_threads(t_philos *philo, int number_of_philos,
 		pthread_t controller)
 {
-	int	n;
+	int	i;
 
-	n = number_of_philos;
+	i = 0;
 	if (pthread_join(controller, NULL) != SUCCESS)
 		return (FAIL);
-	while (n--)
+	while (i < number_of_philos)
 	{
-		if (pthread_join(philo->id_t, NULL) != SUCCESS)
+		if (pthread_join(philo[i].id_t, NULL) != SUCCESS)
 			return (FAIL);
-		if (number_of_philos > 1)
-			philo = philo->right;
+		i++;
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 18:22:25 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/31 13:16:41 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ typedef struct s_philo
 	pthread_mutex_t	philo_mutex;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
-	struct s_philo	*left;
-	struct s_philo	*right;
 	t_info			*info;
 }					t_philos;
 
@@ -81,19 +79,11 @@ typedef struct s_philo_vars
 	int				id;
 }				t_philo_vars;
 
-typedef struct	s_garbage
-{
-	void			*ptr;
-	pthread_mutex_t	*mutex;
-	
-}				t_garbage;
-
 // numbers.c
 long				ft_atol(char *s);
 
 // clearing.c
-void				ft_clear_data(t_philos **philos, int n);
-void				ft_clear_philos(t_philos **philos, int n);
+void				ft_clear_data(t_philos **philos);
 void				ft_destroy_forks(t_info *info, pthread_mutex_t *forks);
 
 // init.c
@@ -123,8 +113,8 @@ time_t				ft_timestamp(void);
 void				*ft_control(void *arg);
 
 // states
-void				ft_eat(t_philos *philo, t_info *info, int id, time_t start);
-void				ft_nap(t_philos *philo, int id, time_t start);
+void				ft_eat(t_philos *philo, t_info *info, int id, t_philo_vars vars);
+void				ft_nap(t_philos *philo, int id, t_philo_vars vars);
 void				ft_think(t_philos *philo, int id, time_t start);
 
 // thread_utils

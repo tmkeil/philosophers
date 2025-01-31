@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 18:50:29 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/31 12:26:32 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	ft_init_philos(t_info *info, t_philos **philos, pthread_mutex_t	*fork
 {
 	int	i;
 
-	(*philos) = malloc(sizeof(t_philos) * (info->n_philos + 1));
+	(*philos) = malloc(sizeof(t_philos) * info->n_philos);
 	if (!(*philos))
 		return (printf("error malloc\n"), FAIL);
 	i = 0;
@@ -60,7 +60,6 @@ static int	ft_init_philos(t_info *info, t_philos **philos, pthread_mutex_t	*fork
 		}
 		i++;
 	}
-	(philos)[i] = NULL;
 	return (SUCCESS);
 }
 

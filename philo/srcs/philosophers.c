@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:05:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 18:49:47 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/31 12:40:44 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int	main(int argc, char **argv)
 		return (FAIL);
 	if (ft_init_data(&philos, argv) != SUCCESS)
 		return (FAIL);
-	ft_test_philos(philos->info, philos);
-	// ft_run_threads(philos);
-	// ft_clear_data(&philos, philos->info->n_philos);
+	ft_run_threads(philos);
+	ft_clear_data(&philos);
 	return (SUCCESS);
 }

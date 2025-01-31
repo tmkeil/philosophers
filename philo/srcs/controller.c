@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 16:23:35 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/31 13:16:02 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ static int	ft_is_dead_eaten_enough(t_philos *philo, t_control_vars vars, int *ea
 	eating = philo->is_eating;
 	fasting = ft_time(vars.start) - philo->last_eaten;
 	pthread_mutex_unlock(&philo->philo_mutex);
-	// printf("last_eaten = %li und start = %li\n", philo->last_eaten, vars.start);
 	if (!eating && fasting > vars.time_to_die)
 	{
-		printf("last_eaten = %li und start = %li\n", philo->last_eaten, vars.start);
 		ft_log(philo->info, ft_time(vars.start), DIED, id);
 		return (1);
 	}
@@ -39,45 +37,40 @@ static int	ft_is_dead_eaten_enough(t_philos *philo, t_control_vars vars, int *ea
 	return (0);
 }
 
-static void	ft_reset_n_sleep(int *n, int *eaten, int number_of_philos)
-{
-	if ((*n) == number_of_philos)
-	{
-		(*n) = 0;
-		(*eaten) = 0;
-		usleep(1000);
-	}
-}
-
 void	ft_init_vars(t_control_vars *vars, t_philos **philo, void *arg)
 {
 	(*philo) = (t_philos *)arg;
-	pthread_mutex_lock(&(*philo)->info->info_mutex);
-	vars->start = (*philo)->info->start_programm;
-	vars->n_to_eat = (*philo)->info->n_to_eat;
-	vars->n_philos = (*philo)->info->n_philos;
-	pthread_mutex_unlock(&(*philo)->info->info_mutex);
+	pthread_mutex_lock(&(*philo)[0].info->info_mutex);
+	vars->start = (*philo)[0].info->start_programm;
+	vars->n_to_eat = (*philo)[0].info->n_to_eat;
+	vars->n_philos = (*philo)[0].info->n_philos;
+	vars->time_to_die = (*philo)[0].info->time_to_die;
+	pthread_mutex_unlock(&(*philo)[0].info->info_mutex);
 }
 
 void	*ft_control(void *arg)
 {
-	int				n;
+	int				i;
 	int				eaten;
 	t_philos		*philo;
 	t_control_vars	vars;
 
 	ft_init_vars(&vars, &philo, arg);
 	eaten = 0;
-	n = 0;
+	i = 0;
 	while (1)
 	{
-		if (ft_is_dead_eaten_enough(philo, vars, &eaten))
+		if (ft_is_dead_eaten_enough(&philo[i], vars, &eaten))
 			break ;
-		n++;
-		philo = philo->right;
-		ft_reset_n_sleep(&n, &eaten, vars.n_philos);
+		i++;
+		if (i == vars.n_philos)
+		{
+			i = 0;
+			eaten = 0;
+		}
 	}
 	pthread_mutex_lock(&philo->info->death_mutex);
 	philo->info->finished = true;
-	return (pthread_mutex_unlock(&philo->info->death_mutex), NULL);
+	pthread_mutex_unlock(&philo->info->death_mutex);
+	return (NULL);
 }

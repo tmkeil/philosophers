@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:00:32 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 13:52:57 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/01/31 13:20:29 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	ft_sleep(time_t msec, t_philos *philo)
 	{
 		usleep(500);
 		gettimeofday(&current, NULL);
-		if ((current.tv_sec - start_philo.tv_sec) + (current.tv_usec
-				- start_philo.tv_usec) / 1000 >= msec)
+		if ((current.tv_sec - start_philo.tv_sec) * 1000 + (current.tv_usec
+				- start_philo.tv_usec) / 1000 > msec)
 			break ;
 	}
 }
