@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/31 13:16:41 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 18:58:52 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_info
 	time_t			time_to_die;
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
+	pthread_mutex_t	forks[MAX_PHILOS];
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	death_mutex;
 	pthread_mutex_t	info_mutex;
@@ -68,7 +69,7 @@ typedef struct s_control_vars
 	int				n_to_eat;
 	time_t			time_to_die;
 	time_t			start;
-}				t_control_vars;
+}					t_control_vars;
 
 typedef struct s_philo_vars
 {
@@ -77,7 +78,7 @@ typedef struct s_philo_vars
 	time_t			start;
 	int				n_philos;
 	int				id;
-}				t_philo_vars;
+}					t_philo_vars;
 
 // numbers.c
 long				ft_atol(char *s);
@@ -90,15 +91,10 @@ void				ft_destroy_forks(t_info *info, pthread_mutex_t *forks);
 int					ft_init_data(t_philos **philos, char **argv);
 int					ft_get_params(int params[], int size, char **argv);
 void				ft_destroy_mutexes(t_info **info, int n);
-void 				ft_assign_values(t_info **info, int params[], time_t time);
+void				ft_assign_values(t_info **info, int params[], time_t time);
 
 // logging.c
 void				ft_log(t_info *info, time_t time, int act, int id);
-
-// strings.c
-int					ft_putchar_fd(char c, int fd);
-int					ft_putstr_fd(char *s, int fd);
-size_t				ft_strlen(const char *s);
 
 // threads
 void				ft_run_threads(t_philos *philos);
@@ -113,7 +109,8 @@ time_t				ft_timestamp(void);
 void				*ft_control(void *arg);
 
 // states
-void				ft_eat(t_philos *philo, t_info *info, int id, t_philo_vars vars);
+void				ft_eat(t_philos *philo, t_info *info, int id,
+						t_philo_vars vars);
 void				ft_nap(t_philos *philo, int id, t_philo_vars vars);
 void				ft_think(t_philos *philo, int id, time_t start);
 

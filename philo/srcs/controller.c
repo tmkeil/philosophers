@@ -6,13 +6,14 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/31 13:16:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 18:59:13 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static int	ft_is_dead_eaten_enough(t_philos *philo, t_control_vars vars, int *eaten)
+static int	ft_is_dead_eaten_enough(t_philos *philo, t_control_vars vars,
+		int *eaten)
 {
 	int		id;
 	int		number;

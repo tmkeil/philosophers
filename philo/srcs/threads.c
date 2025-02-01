@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/31 13:18:10 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 19:00:03 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ static int	ft_one_philo(t_philos *philo, int id, t_philo_vars vars)
 
 void	ft_init_philo_vars(t_philo_vars *vars, t_philos **philo, void *arg)
 {
-	*philo = (t_philos *) arg;
+	*philo = (t_philos *)arg;
 	pthread_mutex_lock(&(*philo)->info->info_mutex);
 	vars->n_philos = (*philo)->info->n_philos;
 	vars->start = (*philo)->info->start_programm;
 	vars->time_to_eat = (*philo)->info->time_to_eat;
 	vars->time_to_sleep = (*philo)->info->time_to_sleep;
-	pthread_mutex_unlock(&(*philo)->info->info_mutex);	
+	pthread_mutex_unlock(&(*philo)->info->info_mutex);
 }
 
 void	*ft_philo(void *arg)
@@ -50,8 +50,6 @@ void	*ft_philo(void *arg)
 	pthread_mutex_unlock(&philo->philo_mutex);
 	if (ft_one_philo(philo, id, vars))
 		return (NULL);
-	if (id % 2 == 0)
-		usleep(1000);
 	while (!ft_death(philo))
 	{
 		ft_think(philo, id, vars.start);

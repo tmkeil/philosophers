@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:56:12 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/30 18:17:00 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 18:59:33 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_get_params(int params[], int size, char **argv)
 	return (SUCCESS);
 }
 
-void ft_assign_values(t_info **info, int params[], time_t time)
+void	ft_assign_values(t_info **info, int params[], time_t time)
 {
 	(*info)->start_programm = time;
 	(*info)->finished = false;

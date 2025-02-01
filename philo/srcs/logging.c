@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 18:15:11 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/31 13:08:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 19:04:41 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static void	ft_write_log(time_t time, int action, int id, t_info *info)
 
 void	ft_log(t_info *info, time_t time, int act, int id)
 {
+	bool	finished;
+
 	pthread_mutex_lock(&info->info_mutex);
-	if (info->finished)
-	{
-		pthread_mutex_unlock(&info->info_mutex);
-		return ;
-	}
+	finished = info->finished;
 	pthread_mutex_unlock(&info->info_mutex);
+	if (finished)
+		return ;
 	ft_write_log(time, act, id, info);
 }

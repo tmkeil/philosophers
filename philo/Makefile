@@ -6,7 +6,7 @@
 #    By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/12 16:04:19 by tkeil             #+#    #+#              #
-#    Updated: 2025/01/30 16:27:41 by tkeil            ###   ########.fr        #
+#    Updated: 2025/02/01 19:25:20 by tkeil            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCLUDES = -I./headers
 OBJSDIR = objs/
 SRCSDIR = srcs/
 
-SRCS = philosophers.c clearing.c init_data.c logging.c strings.c threads.c gettime.c init_utils.c controller.c state.c thread_utils.c
+SRCS = philosophers.c clearing.c init_data.c logging.c threads.c gettime.c init_utils.c controller.c state.c thread_utils.c
 
 SRCS_PATHS = $(addprefix $(SRCSDIR), $(SRCS))
 
@@ -48,6 +48,6 @@ valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./philo
 
 helgrind:
-	valgrind --tool=helgrind ./philo 800 200 200 7
+	valgrind --tool=helgrind ./philo 2 200 200 7
 
 .PHONY: all clean fclean re bonus

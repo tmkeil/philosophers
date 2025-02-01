@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:08:41 by tkeil             #+#    #+#             */
-/*   Updated: 2025/01/31 13:04:20 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 19:24:05 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ int	ft_start_threads(t_philos *philo, int *number_of_philos)
 	pthread_mutex_unlock(&philo[0].info->info_mutex);
 	while (i < *number_of_philos)
 	{
-		if (pthread_create(&philo[i].id_t, NULL, &ft_philo, &philo[i]) != SUCCESS)
+		if (pthread_create(&philo[i].id_t, NULL, &ft_philo,
+				&philo[i]) != SUCCESS)
 			return (FAIL);
 		i++;
 	}
 	return (SUCCESS);
 }
 
-int	ft_join_threads(t_philos *philo, int number_of_philos,
-		pthread_t controller)
+int	ft_join_threads(t_philos *philo, int number_of_philos, pthread_t controller)
 {
 	int	i;
 
