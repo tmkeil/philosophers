@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:56:12 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 18:59:33 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 22:45:20 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,19 @@ long	ft_atol(char *s)
 	return (val * p);
 }
 
+int	ft_is_invalid(char *str)
+{
+	int i = 0;
+
+	while (str[i])
+	{
+		if (!(str[i] >= '0' && str[i] <= '9'))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_get_params(int params[], int size, char **argv)
 {
 	int	i;
@@ -50,6 +63,8 @@ int	ft_get_params(int params[], int size, char **argv)
 	i = 0;
 	while (i < size && argv[i + 1])
 	{
+		if (ft_is_invalid(argv[i + 1]))
+			return (printf("invalid input\n"), FAIL);
 		params[i] = ft_atol(argv[i + 1]);
 		if (params[i] <= 0 || params[i] > INT_MAX)
 		{

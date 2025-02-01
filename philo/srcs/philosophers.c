@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:05:38 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 19:23:42 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 22:26:01 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 	t_philos	*philos;
 
 	if (!(argc >= 5 && argc <= 6) || !*argv[0])
-		return (FAIL);
+		return (printf("too less or too many args\n"), FAIL);
 	if (ft_init_data(&philos, argv) != SUCCESS)
 		return (FAIL);
 	ft_run_threads(philos);

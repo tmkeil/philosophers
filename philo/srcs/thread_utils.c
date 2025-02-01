@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:08:41 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 19:24:05 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 22:04:11 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ bool	ft_death(t_philos *philo)
 {
 	bool	finished;
 
+	pthread_mutex_lock(&philo->info->info_mutex);
 	pthread_mutex_lock(&philo->info->death_mutex);
 	finished = philo->info->finished;
+	pthread_mutex_unlock(&philo->info->info_mutex);
 	pthread_mutex_unlock(&philo->info->death_mutex);
 	return (finished);
 }

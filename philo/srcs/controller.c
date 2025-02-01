@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 18:59:13 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/01 22:04:35 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ void	*ft_control(void *arg)
 			eaten = 0;
 		}
 	}
+	pthread_mutex_lock(&philo->info->info_mutex);
 	pthread_mutex_lock(&philo->info->death_mutex);
 	philo->info->finished = true;
 	pthread_mutex_unlock(&philo->info->death_mutex);
+	pthread_mutex_unlock(&philo->info->info_mutex);
 	return (NULL);
 }
