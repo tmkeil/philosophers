@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:08:41 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 22:04:11 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 14:02:22 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ bool	ft_death(t_philos *philo)
 {
 	bool	finished;
 
-	pthread_mutex_lock(&philo->info->info_mutex);
 	pthread_mutex_lock(&philo->info->death_mutex);
 	finished = philo->info->finished;
-	pthread_mutex_unlock(&philo->info->info_mutex);
 	pthread_mutex_unlock(&philo->info->death_mutex);
 	return (finished);
 }
@@ -40,9 +38,9 @@ void	ft_grab_forks(t_philos *philo, int id, time_t start)
 		second = philo->fork_l;
 	}
 	pthread_mutex_lock(first);
-	ft_log(philo->info, ft_time(start), FORK, id);
+	ft_log(philo->info, start, FORK, id);
 	pthread_mutex_lock(second);
-	ft_log(philo->info, ft_time(start), FORK, id);
+	ft_log(philo->info, start, FORK, id);
 }
 
 void	ft_release_forks(pthread_mutex_t *left, pthread_mutex_t *right)

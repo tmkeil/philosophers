@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 18:58:52 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 14:08:17 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct s_philo
 	pthread_t		id_t;
 	int				n_eaten;
 	time_t			last_eaten;
-	bool			is_eating;
 	pthread_mutex_t	philo_mutex;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;

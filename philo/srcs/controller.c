@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:55:44 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 22:04:35 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 14:09:20 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,16 @@ static int	ft_is_dead_eaten_enough(t_philos *philo, t_control_vars vars,
 {
 	int		id;
 	int		number;
-	bool	eating;
 	time_t	fasting;
 
 	pthread_mutex_lock(&philo->philo_mutex);
 	id = philo->id;
 	number = philo->n_eaten;
-	eating = philo->is_eating;
 	fasting = ft_time(vars.start) - philo->last_eaten;
 	pthread_mutex_unlock(&philo->philo_mutex);
-	if (!eating && fasting > vars.time_to_die)
+	if (fasting > vars.time_to_die)
 	{
-		ft_log(philo->info, ft_time(vars.start), DIED, id);
+		ft_log(philo->info, vars.start, DIED, id);
 		return (1);
 	}
 	if (number >= vars.n_to_eat && vars.n_to_eat != -1)
@@ -70,10 +68,8 @@ void	*ft_control(void *arg)
 			eaten = 0;
 		}
 	}
-	pthread_mutex_lock(&philo->info->info_mutex);
 	pthread_mutex_lock(&philo->info->death_mutex);
 	philo->info->finished = true;
 	pthread_mutex_unlock(&philo->info->death_mutex);
-	pthread_mutex_unlock(&philo->info->info_mutex);
 	return (NULL);
 }

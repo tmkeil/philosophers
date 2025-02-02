@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 19:00:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 14:03:10 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_one_philo(t_philos *philo, int id, t_philo_vars vars)
 {
 	if (vars.n_philos == 1)
 	{
-		ft_log(philo->info, ft_time(vars.start), FORK, id);
+		ft_log(philo->info, vars.start, FORK, id);
 		while (1)
 		{
 			if (ft_death(philo))

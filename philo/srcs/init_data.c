@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 22:18:51 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 14:08:23 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static int	ft_init_philos(t_info *info, t_philos **philos,
 		(*philos)[i].id = i;
 		(*philos)[i].info = info;
 		(*philos)[i].n_eaten = 0;
-		(*philos)[i].is_eating = false;
 		(*philos)[i].last_eaten = 0;
 		(*philos)[i].fork_l = &forks[i];
 		(*philos)[i].fork_r = &forks[(i + 1) % info->n_philos];
