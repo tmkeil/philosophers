@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 16:04:40 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/02 14:08:17 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 19:18:13 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@
 # define FAIL EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
 # define MAX_PHILOS 200
+# define MUTEX_INIT "error creating mutex\n"
+# define THREAD_JOIN "error joining thread\n"
+# define THREAD_CREA "error creating thread\n"
+# define MALLOC "error malloc\n"
+# define TIME "error getting time\n"
+# define INVALID_INPUT "invalid input\n"
+# define INVALID_VALUE "Parameter too small or greater than INT_MAX\n"
+# define INVALID_PHILOS "More than 200 philos are not allowed\n"
 
 typedef enum s_actions
 {
@@ -89,7 +97,7 @@ void				ft_destroy_forks(t_info *info, pthread_mutex_t *forks);
 // init.c
 int					ft_init_data(t_philos **philos, char **argv);
 int					ft_get_params(int params[], int size, char **argv);
-void				ft_destroy_mutexes(t_info **info, int n);
+void				ft_destroy_mtx(t_info **info, int n);
 void				ft_assign_values(t_info **info, int params[], time_t time);
 
 // logging.c
@@ -118,8 +126,7 @@ bool				ft_death(t_philos *philo);
 void				ft_grab_forks(t_philos *philo, int id, time_t start);
 void				ft_release_forks(pthread_mutex_t *left,
 						pthread_mutex_t *right);
-int					ft_join_threads(t_philos *philo, int number_of_philos,
-						pthread_t controller);
+int					ft_join_threads(t_philos *philo, int number_of_philos);
 int					ft_start_threads(t_philos *philo, int *number_of_philos);
 
 #endif

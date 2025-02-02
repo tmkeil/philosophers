@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 16:53:26 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/02 14:08:23 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 19:15:40 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,20 @@ static int	ft_init_info(t_info **info, char **argv)
 
 	*info = malloc(sizeof(t_info));
 	if (!*info)
-		return (printf("error malloc\n"), FAIL);
+		return (printf(MALLOC), FAIL);
 	if (ft_get_params(params, sizeof(params) / sizeof(params[0]),
 			argv) != SUCCESS)
 		return (FAIL);
 	time = ft_timestamp();
 	if (time == -1)
-		return (printf("error getting time\n"), FAIL);
+		return (printf(TIME), FAIL);
 	ft_assign_values(info, params, time);
 	if (pthread_mutex_init(&(*info)->print_mutex, NULL) != SUCCESS)
-		return (printf("error init mutex\n"), FAIL);
+		return (printf(MUTEX_INIT), FAIL);
 	if (pthread_mutex_init(&(*info)->death_mutex, NULL) != SUCCESS)
-		return (printf("error init mutex\n"), ft_destroy_mutexes(info, 1),
-			FAIL);
+		return (printf(MUTEX_INIT), ft_destroy_mtx(info, 1), FAIL);
 	if (pthread_mutex_init(&(*info)->info_mutex, NULL) != SUCCESS)
-		return (printf("error init mutex\n"), ft_destroy_mutexes(info, 2),
-			FAIL);
+		return (printf(MUTEX_INIT), ft_destroy_mtx(info, 2), FAIL);
 	return (SUCCESS);
 }
 
@@ -45,7 +43,7 @@ static int	ft_init_philos(t_info *info, t_philos **philos,
 
 	(*philos) = malloc(sizeof(t_philos) * info->n_philos);
 	if (!(*philos))
-		return (printf("error malloc\n"), FAIL);
+		return (printf(MALLOC), FAIL);
 	i = 0;
 	while (i < info->n_philos)
 	{
@@ -59,7 +57,7 @@ static int	ft_init_philos(t_info *info, t_philos **philos,
 		{
 			while (i--)
 				pthread_mutex_destroy(&(*philos)[i].philo_mutex);
-			return (printf("error init mutex\n"), FAIL);
+			return (printf(MUTEX_INIT), FAIL);
 		}
 		i++;
 	}
@@ -77,7 +75,7 @@ static int	ft_init_forks(t_info *info, pthread_mutex_t *forks)
 		{
 			while (i--)
 				pthread_mutex_destroy(&forks[i]);
-			return (printf("error init mutex\n"), FAIL);
+			return (printf(MUTEX_INIT), FAIL);
 		}
 		i++;
 	}
@@ -94,12 +92,12 @@ int	ft_init_data(t_philos **philos, char **argv)
 		return (free(info), info = NULL, FAIL);
 	if (ft_init_forks(info, info->forks) != SUCCESS)
 	{
-		ft_destroy_mutexes(&info, 3);
+		ft_destroy_mtx(&info, 3);
 		return (free(info), info = NULL, FAIL);
 	}
 	if (ft_init_philos(info, philos, info->forks) != SUCCESS)
 	{
-		ft_destroy_mutexes(&info, 3);
+		ft_destroy_mtx(&info, 3);
 		ft_destroy_forks(info, info->forks);
 		free(*philos);
 		philos = NULL;

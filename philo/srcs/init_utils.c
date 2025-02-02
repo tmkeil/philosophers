@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 13:56:12 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/01 22:45:20 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 19:18:22 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,18 @@ int	ft_get_params(int params[], int size, char **argv)
 	while (i < size && argv[i + 1])
 	{
 		if (ft_is_invalid(argv[i + 1]))
-			return (printf("invalid input\n"), FAIL);
+			return (printf(INVALID_INPUT), FAIL);
 		params[i] = ft_atol(argv[i + 1]);
 		if (params[i] <= 0 || params[i] > INT_MAX)
 		{
-			printf("Parameter too small or greater than INT_MAX\n");
+			printf(INVALID_VALUE);
 			return (FAIL);
 		}
 		i++;
 	}
 	if (params[0] > MAX_PHILOS)
 	{
-		printf("More than 200 philos are not allowed\n");
+		printf(INVALID_PHILOS);
 		return (FAIL);
 	}
 	return (SUCCESS);
@@ -92,7 +92,7 @@ void	ft_assign_values(t_info **info, int params[], time_t time)
 	(*info)->time_to_sleep = (time_t)params[3];
 }
 
-void	ft_destroy_mutexes(t_info **info, int n)
+void	ft_destroy_mtx(t_info **info, int n)
 {
 	if (n == 1)
 		pthread_mutex_destroy(&(*info)->print_mutex);

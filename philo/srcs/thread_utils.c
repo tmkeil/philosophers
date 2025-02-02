@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:08:41 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/02 14:02:22 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 14:47:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,11 @@ int	ft_start_threads(t_philos *philo, int *number_of_philos)
 	return (SUCCESS);
 }
 
-int	ft_join_threads(t_philos *philo, int number_of_philos, pthread_t controller)
+int	ft_join_threads(t_philos *philo, int number_of_philos)
 {
 	int	i;
 
 	i = 0;
-	if (pthread_join(controller, NULL) != SUCCESS)
-		return (FAIL);
 	while (i < number_of_philos)
 	{
 		if (pthread_join(philo[i].id_t, NULL) != SUCCESS)

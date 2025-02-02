@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 19:30:56 by tkeil             #+#    #+#             */
-/*   Updated: 2025/02/02 14:03:10 by tkeil            ###   ########.fr       */
+/*   Updated: 2025/02/02 22:35:27 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,19 @@ void	ft_run_threads(t_philos *philo)
 
 	if (pthread_create(&controller, NULL, &ft_control, philo) != SUCCESS)
 	{
-		printf("error creating thread\n");
+		printf(THREAD_CREA);
 		return ;
 	}
 	if (ft_start_threads(philo, &number_of_philos) != SUCCESS)
 	{
-		printf("error creating thread\n");
+		printf(THREAD_CREA);
 		return ;
 	}
-	if (ft_join_threads(philo, number_of_philos, controller) != SUCCESS)
+	if (pthread_join(controller, NULL) != SUCCESS)
+		return ;
+	if (ft_join_threads(philo, number_of_philos) != SUCCESS)
 	{
-		printf("error joining thread\n");
+		printf(THREAD_JOIN);
 		return ;
 	}
 }
